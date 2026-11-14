@@ -1,0 +1,241 @@
+/* Demo Entwurf 2 – Programm-Oberfläche im Glasrahmen (Vorbild: Salesforce-Demo-Karussell).
+   Rahmen + Reiter außen, darin eine dichte App-Oberfläche: Kopfleiste, Statuspfad, Kundenkarte, Arbeitsfläche, WhatsApp. */
+
+.d2-sektion{position:relative;overflow:hidden;padding:clamp(4.5rem,8vw,7rem) 0 clamp(4rem,7vw,6rem);color:#fff;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(217,181,106,.18),transparent 70%),radial-gradient(ellipse 80% 70% at 50% 60%,#24473A 0%,#152C22 72%)}
+.d2-glanz{position:absolute;inset:0;pointer-events:none;background:repeating-radial-gradient(circle at 50% 120%,rgba(255,255,255,.035) 0 2px,transparent 2px 26px);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+.d2-stern{position:absolute;fill:#E4C277;filter:drop-shadow(0 0 14px rgba(228,194,119,.55));animation:d2stern 6s ease-in-out infinite}
+.d2-stern.a{width:64px;left:4%;top:34%}.d2-stern.b{width:30px;left:8.5%;top:46%;animation-delay:-2s}.d2-stern.c{width:44px;right:4.5%;bottom:16%;animation-delay:-4s}
+@keyframes d2stern{50%{transform:scale(.82) rotate(10deg);opacity:.8}}
+.d2-titel{text-align:center;font-size:clamp(1.7rem,3.4vw,2.7rem);color:#fff;max-width:900px;margin:0 auto 2.4rem}
+.d2-titel em{font-style:normal;color:var(--gold-hell)}
+.d2-fuss{text-align:center;font-size:.82rem;color:rgba(241,238,229,.55);margin:1.4rem 0 0}
+
+/* Glasrahmen */
+.d2{position:relative;max-width:1180px;margin:0 auto;padding:14px;border-radius:30px;
+  background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.1));border:1px solid rgba(255,255,255,.38);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 60px 120px -50px rgba(0,0,0,.75),0 0 0 1px rgba(0,0,0,.05);
+  backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  transform:translateY(calc(var(--d2-y,0) * 1px)) scale(var(--d2-s,.94));transform-origin:50% 20%;will-change:transform}
+.d2-leiste{display:flex;align-items:center;gap:.6rem;padding:0 2px 12px}
+.d2-reiter{display:flex;gap:.45rem;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.d2-reiter::-webkit-scrollbar{display:none}
+.d2-reiter button{position:relative;flex:none;display:inline-flex;align-items:center;gap:.55rem;height:44px;padding:0 1.15rem 0 .55rem;border-radius:999px;
+  border:1.5px solid rgba(255,255,255,.6);background:rgba(255,255,255,.82);color:#18241D;font:600 .92rem/1 "Montserrat";cursor:pointer;
+  box-shadow:0 2px 10px -4px rgba(0,0,0,.25);transition:background .25s,border-color .25s,transform .2s}
+.d2-reiter button:hover{transform:translateY(-1px);background:#fff}
+.d2-reiter button[aria-selected=true]{background:#fff;border-color:var(--gold)}
+.d2-reiter .rk{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--tanne);color:var(--gold-hell)}
+.d2-reiter .rk svg{width:17px;height:17px}
+.d2-reiter .lauf{position:absolute;left:18px;right:18px;bottom:-1.5px;height:2.5px;border-radius:2px;background:var(--gold);transform-origin:0 50%;transform:scaleX(0)}
+.d2-reiter button[aria-selected=true] .lauf{transform:scaleX(var(--lauf,0))}
+.d2-steuer{display:flex;gap:.4rem;flex:none}
+.d2-rund{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);background:rgba(255,255,255,.82);color:#18241D;cursor:pointer;transition:background .2s}
+.d2-rund:hover{background:#fff}.d2-rund svg{width:18px;height:18px}
+.d2-cta{display:inline-flex;align-items:center;height:44px;padding:0 1.3rem;border-radius:999px;background:var(--gold-hell);color:var(--tanne);font:700 .92rem "Montserrat";text-decoration:none;box-shadow:0 10px 24px -12px rgba(217,181,106,.9);white-space:nowrap}
+
+/* Bühne: feste Designgröße, wird passend skaliert (gestochen scharf, wie ein Bildschirm) */
+.d2-buehne{position:relative;border-radius:20px;overflow:hidden;background:#F5F3EC;box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
+.d2-skala{position:absolute;left:0;top:0;width:1140px;height:680px;transform-origin:0 0}
+
+/* Titelkarte */
+.d2-intro{position:absolute;inset:0;z-index:5;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden;
+  background:radial-gradient(ellipse 50% 60% at 30% 30%,rgba(217,181,106,.35),transparent 60%),radial-gradient(ellipse 60% 70% at 75% 70%,rgba(47,90,68,.9),transparent 70%),#10241B;
+  transition:opacity .6s ease,visibility .6s}
+.d2-intro::before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 0deg at 50% 50%,transparent,rgba(217,181,106,.12),transparent 30%);animation:d2dreh 14s linear infinite}
+@keyframes d2dreh{to{transform:rotate(1turn)}}
+.d2-intro.weg{opacity:0;visibility:hidden}
+.d2-intro>div{position:relative}
+.d2-intro .marke2{display:inline-flex;align-items:center;gap:.6rem;font:600 1.15rem "Montserrat";color:#F1EEE5;margin-bottom:1.2rem}
+.d2-intro .marke2 i{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(217,181,106,.5);color:var(--gold-hell)}
+.d2-intro .marke2 svg{width:22px;height:22px}
+.d2-intro h3{font:700 3.1rem/1.08 "Montserrat";letter-spacing:-.03em;margin:0 0 1.8rem;background:linear-gradient(90deg,#fff,#F1E2BC);-webkit-background-clip:text;background-clip:text;color:transparent}
+.d2-intro button{height:50px;padding:0 1.6rem;border-radius:999px;border:0;background:rgba(255,255,255,.92);color:#152C22;font:700 1rem "Montserrat";cursor:pointer;box-shadow:0 14px 30px -12px rgba(0,0,0,.6)}
+
+/* ===== App ===== */
+.app{position:absolute;inset:0;display:grid;grid-template-rows:52px 40px 58px 1fr;font:13px/1.45 "Inter",system-ui,sans-serif;color:#18241D;background:#F5F3EC}
+.app-kopf{display:flex;align-items:center;gap:16px;padding:0 18px;background:#fff;border-bottom:1px solid #E7E1D3}
+.app-logo{display:flex;align-items:center;gap:8px;font:800 13px "Montserrat";letter-spacing:.06em;color:#152C22;min-width:190px}
+.app-logo svg{width:28px;height:28px}
+.app-suche{flex:1;max-width:420px;margin:0 auto;display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:9px;background:#F3F0E8;border:1px solid #E7E1D3;color:#8A928C}
+.app-suche svg{width:14px;height:14px}
+.app-icons{display:flex;align-items:center;gap:14px;color:#55615A}
+.app-icons svg{width:18px;height:18px}
+.app-icons .glocke{position:relative}.app-icons .glocke b{position:absolute;right:-6px;top:-5px;min-width:15px;height:15px;border-radius:8px;background:#C2412D;color:#fff;font:700 9px/15px "Inter";text-align:center}
+.app-avatar{width:30px;height:30px;border-radius:50%;background:var(--tanne);color:var(--gold-hell);display:grid;place-items:center;font:700 12px "Montserrat"}
+.app-nav{display:flex;align-items:stretch;gap:2px;padding:0 18px;background:#fff;border-bottom:1px solid #E7E1D3}
+.app-nav span{display:flex;align-items:center;gap:6px;padding:0 12px;color:#55615A;font-weight:500;border-bottom:2.5px solid transparent}
+.app-nav span.an{color:#152C22;font-weight:650;border-bottom-color:var(--gold)}
+.app-nav svg{width:10px;height:10px;opacity:.6}
+
+/* Statuspfad (Pfeile) */
+.app-pfad{display:flex;align-items:center;gap:14px;padding:0 18px;background:#FBFAF6;border-bottom:1px solid #E7E1D3}
+.app-pfad .titel{min-width:260px}
+.app-pfad .titel small{display:block;color:#8A928C;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.app-pfad .titel b{font:700 15px "Montserrat";color:#152C22}
+.pfad{flex:1;display:flex;height:34px}
+.pfad i{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-style:normal;font-weight:600;font-size:12px;color:#55615A;background:#ECE8DD;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%,12px 50%);margin-left:-8px;transition:background .5s,color .5s}
+.pfad i:first-child{clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);margin-left:0;border-radius:17px 0 0 17px}
+.pfad i:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,12px 50%);border-radius:0 17px 17px 0}
+.pfad i.ok{background:#2F5A44;color:#fff}
+.pfad i.jetzt{background:#152C22;color:var(--gold-hell)}
+.pfad i.ok::before{content:"✓";font-weight:800}
+
+.app-body{display:grid;grid-template-columns:250px 1fr 300px;min-height:0}
+/* Kundenkarte */
+.karte{background:#152C22;color:#E9E6DC;padding:18px 16px 60px;display:flex;flex-direction:column;gap:12px;min-height:0;overflow:hidden}
+.karte .kk-kopf{display:flex;align-items:center;gap:10px}
+.karte .kk-kopf i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(217,181,106,.15);border:1px solid rgba(217,181,106,.45);color:var(--gold-hell);font:700 14px "Montserrat";font-style:normal}
+.karte .kk-kopf b{display:block;color:#fff;font:700 14px "Montserrat"}.karte .kk-kopf small{color:rgba(233,230,220,.6);font-size:11.5px}
+.karte dl{margin:0;display:grid;gap:8px}
+.karte dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(217,181,106,.85);font-weight:700}
+.karte dd{margin:1px 0 0;color:#fff;font-weight:500}
+.karte .messer{margin-top:auto;display:grid;gap:9px}
+.karte .messer div{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:11.5px;color:rgba(233,230,220,.75)}
+.karte .messer b{color:#fff;font-weight:600}
+.karte .messer s{grid-column:1/-1;height:5px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;text-decoration:none}
+.karte .messer s::after{content:"";display:block;height:100%;width:var(--w,0%);background:linear-gradient(90deg,#B98A3E,#E4C277);border-radius:3px;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+/* Arbeitsfläche */
+.flaeche{display:flex;flex-direction:column;min-width:0;min-height:0;padding:14px 18px;gap:12px;overflow:hidden}
+.reiter2{display:flex;gap:4px;border-bottom:1px solid #E7E1D3}
+.reiter2 span{padding:7px 12px;font-weight:600;color:#6B756F;border-bottom:2.5px solid transparent;margin-bottom:-1px;transition:color .3s,border-color .3s}
+.reiter2 span.an{color:#152C22;border-bottom-color:#152C22}
+.ansicht{position:relative;flex:1;min-height:0}
+.ansicht>div{position:absolute;inset:0;opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s;pointer-events:none}
+.ansicht>div.an{opacity:1;transform:none;pointer-events:auto}
+.box{background:#fff;border:1px solid #E7E1D3;border-radius:12px;box-shadow:0 1px 2px rgba(21,44,34,.04)}
+.box-kopf{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #EFEBE1;font-weight:650}
+.box-kopf small{font-weight:500;color:#8A928C}
+.etikett{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:650}
+.etikett.gruen{background:#E3EFE6;color:#2F5A44}.etikett.gold{background:#F6EBD3;color:#8A6420}.etikett.grau{background:#EFEBE1;color:#6B756F}.etikett.rot{background:#F8E3DE;color:#A63A26}
+/* Fotos */
+.fotoraster{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px}
+.foto{position:relative;border-radius:9px;overflow:hidden;aspect-ratio:4/3;background:#DDD3C1}
+.foto svg{position:absolute;inset:0;width:100%;height:100%}
+.foto span{position:absolute;left:6px;bottom:6px;padding:2px 7px;border-radius:6px;background:rgba(21,44,34,.82);color:#fff;font-size:10.5px;font-weight:600}
+.foto em{position:absolute;right:6px;top:6px;font-style:normal;padding:2px 7px;border-radius:6px;background:#fff;color:#152C22;font-size:10px;font-weight:700;letter-spacing:.06em}
+.foto.neu{animation:d2rein .5s both}
+/* Angebot */
+.angebot2{padding:16px 18px;display:grid;gap:4px;position:relative}
+.angebot2 .a-zeile{display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px dashed #E7E1D3}
+.angebot2 .a-zeile i{font-style:normal;color:#8A928C;font-size:11px}
+.angebot2 .a-zeile em{font-style:normal;color:#2F5A44;font-weight:600;font-size:12px}
+.angebot2 .a-summe{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.angebot2 .a-summe b{font:700 15px "Montserrat"}
+.knopf2{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:9px;border:0;font:650 12.5px "Inter";cursor:pointer;background:#152C22;color:#fff;transition:transform .15s,background .3s}
+.knopf2.gold{background:var(--gold-hell);color:#152C22}
+.knopf2.gedrueckt{transform:scale(.94)}
+.knopf2.ok2{background:#2F5A44;color:#fff}
+.stempel2{position:absolute;right:26px;top:40px;width:120px;height:120px;border-radius:50%;border:3px solid #2F5A44;color:#2F5A44;display:grid;place-items:center;text-align:center;font:800 12px/1.25 "Montserrat";letter-spacing:.1em;transform:rotate(-12deg) scale(0);opacity:0;transition:transform .5s cubic-bezier(.2,1.7,.4,1),opacity .3s}
+.stempel2.an{transform:rotate(-12deg) scale(1);opacity:.9}
+/* Checkliste mit Zeiten */
+.check2{list-style:none;margin:0;padding:6px 14px}
+.check2 li{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #F1EDE3}
+.check2 li:last-child{border:0}
+.check2 i{width:20px;height:20px;border-radius:6px;border:1.5px solid #D5CDBB;display:grid;place-items:center;font-style:normal;color:#fff;font-size:12px;transition:background .3s,border-color .3s}
+.check2 li.ok i{background:#2F5A44;border-color:#2F5A44}
+.check2 li.ok i::before{content:"✓"}
+.check2 li.ok span{color:#6B756F;text-decoration:line-through;text-decoration-color:#C9C1AE}
+.check2 time{font-size:11px;color:#8A928C;opacity:0;transition:opacity .3s}.check2 li.ok time{opacity:1}
+/* Raum-Board */
+.raeume{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.raum{padding:12px;display:flex;align-items:center;gap:12px}
+.fring{--p:0;width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;font:700 11px "Inter";color:#152C22;
+  background:radial-gradient(closest-side,#fff 76%,transparent 78%),conic-gradient(#2F5A44 calc(var(--p)*1%),#ECE8DD 0);transition:--p 1.4s}
+@property --p{syntax:"<number>";inherits:false;initial-value:0}
+.raum b{display:block;font-weight:650}.raum small{color:#8A928C;font-size:11.5px}
+.beiseite{margin-top:10px}
+.beiseite li{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid #F1EDE3}
+.beiseite li i{width:28px;height:28px;border-radius:8px;background:#F6EBD3;display:grid;place-items:center;font-style:normal;font-size:14px}
+.beiseite li.neu{animation:d2rein .5s both}
+/* Wochenplan */
+.woche{display:grid;grid-template-columns:52px repeat(5,1fr);border-top:1px solid #EFEBE1}
+.woche>div{border-right:1px solid #F1EDE3;border-bottom:1px solid #F1EDE3;min-height:44px;padding:5px;position:relative}
+.woche .kt{font-weight:650;color:#6B756F;font-size:11.5px;text-align:center;min-height:0;padding:7px 0;background:#FBFAF6}
+.woche .zt{font-size:11px;color:#8A928C;text-align:right;padding-right:8px}
+.ev{display:block;padding:4px 7px;border-radius:7px;font-size:11px;font-weight:600;line-height:1.25;animation:d2rein .4s both}
+.ev.a{background:#E3EFE6;color:#2F5A44;border-left:3px solid #2F5A44}.ev.b{background:#F6EBD3;color:#8A6420;border-left:3px solid #B98A3E}.ev.c{background:#E6ECF3;color:#3A5878;border-left:3px solid #5B7DA3}
+.meldung{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:10px 14px;border-bottom:1px solid #F1EDE3}
+.meldung .mini{width:48px;height:36px;border-radius:7px;overflow:hidden;position:relative;background:#DDD3C1}
+.meldung .mini svg{position:absolute;inset:0;width:100%;height:100%}
+.meldung b{display:block;font-weight:600}.meldung small{color:#8A928C}
+/* Jahresplan (Balken) */
+.jahr{display:grid;grid-template-columns:110px repeat(12,1fr);font-size:11px}
+.jahr .m{text-align:center;color:#8A928C;padding:6px 0;border-bottom:1px solid #EFEBE1;font-weight:600}
+.jahr .n{padding:9px 0;font-weight:600;color:#18241D;border-bottom:1px solid #F5F2EA}
+.jahr .spur{grid-column:2/-1;position:relative;border-bottom:1px solid #F5F2EA;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/12 - 1px),#F1EDE3 calc(100%/12 - 1px) calc(100%/12))}
+.balken{position:absolute;top:7px;bottom:7px;border-radius:6px;transform-origin:0 50%;transform:scaleX(0);transition:transform 1s cubic-bezier(.2,.7,.2,1);display:flex;align-items:center;padding:0 8px;color:#fff;font-weight:650;white-space:nowrap;overflow:hidden}
+.balken.an{transform:scaleX(1)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi{padding:12px 14px}
+.kpi small{display:block;color:#8A928C;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:650}
+.kpi b{font:700 22px "Montserrat";color:#152C22}
+.kpi em{font-style:normal;font-size:11.5px;color:#2F5A44;font-weight:600;margin-left:4px}
+
+/* WhatsApp-Spalte */
+.wa{display:flex;flex-direction:column;min-height:0;background:#EFEAE0;border-left:1px solid #E7E1D3}
+.wa-kopf{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1F4033;color:#fff}
+.wa-kopf i{width:34px;height:34px;border-radius:50%;background:#152C22;display:grid;place-items:center;border:1px solid rgba(217,181,106,.5)}
+.wa-kopf i svg{width:26px;height:26px}
+.wa-kopf b{display:block;font-weight:650}.wa-kopf small{color:rgba(255,255,255,.7);font-size:11px}
+.wa-verlauf{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:12px 10px;
+  background-color:#EFEAE0;background-image:radial-gradient(rgba(21,44,34,.05) 1px,transparent 1px);background-size:14px 14px}
+.bl{max-width:86%;padding:6px 9px 4px;border-radius:9px;font-size:12.5px;box-shadow:0 1px 1px rgba(0,0,0,.08);animation:d2rein .35s both}
+.bl.k{align-self:flex-end;background:#D9F2CF;border-top-right-radius:2px}
+.bl.j{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+.bl small{display:block;text-align:right;font-size:10px;color:#7C877F;margin-top:1px}
+.bl small.blau::after{content:" ✓✓";color:#3A8EDB;letter-spacing:-.2em}
+.bl .fotos2{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:2px 0 3px;border-radius:6px;overflow:hidden}
+.bl .fotos2 div{position:relative;aspect-ratio:1;background:#DDD3C1}
+.bl .fotos2 svg{position:absolute;inset:0;width:100%;height:100%}
+.tippt{align-self:flex-start;display:flex;gap:3px;padding:10px 12px;border-radius:9px;background:#fff;animation:d2rein .3s both}
+.tippt i{width:6px;height:6px;border-radius:50%;background:#9AA49D;animation:d2tipp 1s infinite}
+.tippt i:nth-child(2){animation-delay:.15s}.tippt i:nth-child(3){animation-delay:.3s}
+@keyframes d2tipp{50%{transform:translateY(-3px);opacity:.5}}
+.wa-eingabe{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#F5F1E8}
+.wa-eingabe span{flex:1;height:32px;border-radius:16px;background:#fff;padding:0 12px;display:flex;align-items:center;color:#18241D;font-size:12.5px;overflow:hidden;white-space:nowrap}
+.wa-eingabe span:empty::before{content:"Nachricht";color:#9AA49D}
+.wa-eingabe b{width:32px;height:32px;border-radius:50%;background:#2F5A44;display:grid;place-items:center;color:#fff}
+.wa-eingabe b svg{width:15px;height:15px}
+
+/* Mauszeiger mit Klick-Welle */
+.zeiger{position:absolute;left:0;top:0;z-index:4;width:22px;height:22px;pointer-events:none;transition:transform .9s cubic-bezier(.45,.05,.25,1);filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.zeiger::after{content:"";position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:rgba(217,181,106,.55);transform:scale(0);opacity:0}
+.zeiger.klick::after{animation:d2welle .5s ease-out}
+@keyframes d2welle{from{transform:scale(.2);opacity:1}to{transform:scale(1.6);opacity:0}}
+
+/* Details-Knopf unten links */
+.d2-details{position:absolute;left:14px;bottom:14px;z-index:6;height:34px;padding:0 14px;border-radius:999px;border:0;background:#152C22;color:#fff;font:650 12.5px "Inter";cursor:pointer;box-shadow:0 8px 20px -8px rgba(0,0,0,.5)}
+.d2-info{position:absolute;left:14px;bottom:56px;z-index:6;width:320px;padding:14px 16px;border-radius:14px;background:#fff;color:#18241D;font-size:13px;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);opacity:0;transform:translateY(8px);pointer-events:none;transition:.25s}
+.d2-info.an{opacity:1;transform:none;pointer-events:auto}
+.d2-info b{display:block;font:700 14px "Montserrat";margin-bottom:4px}
+
+@keyframes d2rein{from{opacity:0;transform:translateY(8px)}}
+
+/* Handy: einspaltige App (Designgröße 600×900) */
+.d2-skala.schmal .app{grid-template-rows:52px 64px 1fr}
+.d2-skala.schmal .app-nav,.d2-skala.schmal .app-suche,.d2-skala.schmal .karte,.d2-skala.schmal .app-icons>svg{display:none}
+.d2-skala.schmal .app-logo{min-width:0;flex:1}
+.d2-skala.schmal .app-pfad{flex-direction:column;align-items:stretch;justify-content:center;gap:6px;padding:8px 14px}
+.d2-skala.schmal .app-pfad .titel{min-width:0}.d2-skala.schmal .app-pfad .titel small{display:none}
+.d2-skala.schmal .pfad{height:28px}.d2-skala.schmal .pfad i{font-size:10.5px}
+.d2-skala.schmal .app-body{grid-template-columns:1fr;grid-template-rows:1fr 300px}
+.d2-skala.schmal .flaeche{padding:10px 12px}
+.d2-skala.schmal .jahr{grid-template-columns:86px repeat(12,1fr)}
+.d2-skala.schmal .kpi b{font-size:18px}
+.d2-skala.schmal .wa{border-left:0;border-top:1px solid #E7E1D3}
+.d2-skala.schmal .app{font-size:15px}
+.d2-skala.schmal .raeume{grid-template-columns:1fr 1fr}
+.d2-skala.schmal .d2-intro h3{font-size:2.4rem}
+@media (max-width:720px){
+  .d2{padding:8px;border-radius:22px}
+  .d2-leiste{flex-wrap:wrap}
+  .d2-reiter{flex-basis:100%}
+  .d2-steuer{margin-left:auto}
+  .d2-cta{display:none}
+  .d2-details,.d2-info{display:none}
+  .d2-reiter button{height:40px;font-size:.85rem}
+  .d2-stern{display:none}
+}
+@media (prefers-reduced-motion:reduce){.zeiger{display:none}}
