@@ -151,6 +151,65 @@
     } finally { knopf.disabled = false; }
   });
 
+  // Demo-Fenster: Reiter laufen von selbst durch (Titelkarte → Schritte → nächster Reiter), anklickbar, Pause
+  const demo = $('[data-demo]');
+  if (demo && daten.demo) {
+    const reiterBox = $('[data-demo-reiter]'), schritteBox = $('[data-demo-schritte]'), mitte = $('[data-demo-mitte]'), rechts = $('[data-demo-rechts]');
+    const TAKT = 3600, INTRO = 2600;
+    let b = 0, s = -1, pause = matchMedia('(prefers-reduced-motion: reduce)').matches, imBild = false, uhr = null;
+    const zeichen = (gr = 30) => `<svg viewBox="-8 -8 216 216" width="${gr}" height="${gr}" style="--ring:#D9B56A;--baum:#F1EEE5"><use href="#zeichen"/></svg>`;
+    reiterBox.innerHTML = daten.demo.map((d, i) => `<button type="button" role="tab" data-i="${i}">${svgIcon(d.icon, 2)}${d.name}<i></i></button>`).join('');
+    const bildschirm = (x) => {
+      const kopf = `<h3>${x.titel}<small>${daten.demo[b].name}</small></h3>`;
+      if (x.typ === 'chat') return kopf + `<div class="chat">${x.nachrichten.map((n, k) => `<div class="blase ${n.von}" style="--v:${k * 450}ms">${n.von === 'julius' ? '<small>Julius</small>' : ''}${n.text}${n.fotos ? `<div class="fotos">${'<span></span>'.repeat(n.fotos)}</div>` : ''}</div>`).join('')}</div>`;
+      if (x.typ === 'termin') return kopf + `<div class="termin"><div class="tag"><div><b>${x.tag}</b><span>${x.zeit}</span></div></div><ul>${x.zeilen.map((z) => `<li>${z}</li>`).join('')}</ul></div>`;
+      if (x.typ === 'angebot') return kopf + `<div class="angebot"><div class="kopfzeile"><span>ANGEBOT</span>${zeichen()}</div><ul>${x.posten.map((z) => `<li>${z}</li>`).join('')}</ul><div class="summe">Gesamt<span>${x.fuss}</span></div></div>`;
+      if (x.typ === 'plan') return kopf + `<div class="plan">${x.zeilen.map(([a, t], k) => `<div style="--v:${k * 120}ms"><b>${a}</b><span>${t}</span></div>`).join('')}</div>`;
+      if (x.typ === 'liste') return kopf + `<ul class="liste">${x.punkte.map((t, k) => `<li><i style="--v:${300 + k * 450}ms"></i>${t}</li>`).join('')}</ul>`;
+      return `<div class="fertig"><div class="stempel">${x.stempel || 'ERLEDIGT ✓'}</div><h3 style="display:block">${x.titel}</h3><p>${x.text}</p></div>`;
+    };
+    const zeige = () => {
+      const d = daten.demo[b];
+      const dauer = INTRO + d.schritte.length * TAKT;
+      reiterBox.querySelectorAll('button').forEach((x) => { const an = x.dataset.i == b; x.setAttribute('aria-selected', an); if (an) x.style.setProperty('--dauer', `${dauer}ms`); });
+      schritteBox.innerHTML = d.schritte.map((x, k) => `<li><button type="button" data-k="${k}" class="${k < s ? 'erledigt' : ''}${k === s ? ' aktiv' : ''}"><b>${k < s ? '✓' : k + 1}</b>${x.titel}</button></li>`).join('');
+      mitte.innerHTML = s < 0
+        ? `<div class="demo-intro"><div><svg class="gross" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><use href="#${d.icon}"/></svg><p>${d.name}</p><h3>${d.intro}</h3><button type="button" class="knopf gold" data-demo-start>Ablauf ansehen ${svgIcon('i-pfeil', 2)}</button></div></div>`
+        : bildschirm(d.schritte[s]);
+      rechts.innerHTML = `<div class="wer">${zeichen(48)}<div><b>Julius</b><small>Ihr Ansprechpartner</small></div></div>
+        <p class="hinweis">Kein Callcenter, keine KI – Sie sprechen direkt mit Julius.</p>
+        <div class="tipp"><b>Gut zu wissen</b>${d.tipp}</div>
+        <div class="unten"><a class="knopf gold" ${f.telefon ? `href="tel:${f.telefon}"` : 'href="#kontakt"'}>${svgIcon('i-tel', 2)} Anrufen</a>
+        <a class="knopf hell" ${f.whatsapp ? `href="https://wa.me/${f.whatsapp}" target="_blank" rel="noopener"` : 'href="#kontakt"'}>${svgIcon('i-wa', 2)} WhatsApp</a></div>`;
+      // Am Handy: aktiven Schritt/Reiter in der Querleiste sichtbar halten (ohne die Seite zu verschieben)
+      const aktivS = schritteBox.querySelector('.aktiv'); schritteBox.scrollLeft = aktivS ? aktivS.parentElement.offsetLeft - 16 : 0;
+      const aktivR = reiterBox.querySelector('[aria-selected=true]'); if (aktivR) reiterBox.scrollLeft = aktivR.offsetLeft - 8;
+      // Fortschrittsbalken neu starten
+      const balken = reiterBox.querySelector('[aria-selected=true] i'); if (balken) { balken.style.animation = 'none'; void balken.offsetWidth; balken.style.animation = ''; }
+      plane();
+    };
+    const weiter = () => { const d = daten.demo[b]; if (s < d.schritte.length - 1) s++; else { b = (b + 1) % daten.demo.length; s = -1; } zeige(); };
+    const plane = () => { clearTimeout(uhr); if (!pause && imBild) uhr = setTimeout(weiter, s < 0 ? INTRO : TAKT); };
+    const setzePause = (p) => { pause = p; demo.classList.toggle('pause', p); $('[data-symbol-pause]').toggleAttribute('hidden', p); $('[data-symbol-play]').toggleAttribute('hidden', !p); plane(); };
+    reiterBox.addEventListener('click', (e) => { const x = e.target.closest('button'); if (!x) return; b = +x.dataset.i; s = -1; zeige(); });
+    schritteBox.addEventListener('click', (e) => { const x = e.target.closest('button'); if (!x) return; s = +x.dataset.k; setzePause(true); zeige(); });
+    mitte.addEventListener('click', (e) => { if (e.target.closest('[data-demo-start]')) { s = 0; zeige(); } });
+    $('[data-demo-vor]').addEventListener('click', () => { b = (b + 1) % daten.demo.length; s = -1; zeige(); });
+    $('[data-demo-zurueck]').addEventListener('click', () => { b = (b - 1 + daten.demo.length) % daten.demo.length; s = -1; zeige(); });
+    $('[data-demo-pause]').addEventListener('click', () => setzePause(!pause));
+    setzePause(pause);
+    // Läuft nur, solange das Fenster im Bild ist; wächst beim Hereinscrollen (wie bei Salesforce)
+    const demoScroll = () => {
+      const r = demo.getBoundingClientRect(), h = innerHeight;
+      const jetzt = r.top < h * 0.85 && r.bottom > h * 0.15;
+      if (jetzt !== imBild) { imBild = jetzt; plane(); }
+      const anteil = Math.min(1, Math.max(0, (h - r.top) / (h * 0.7)));
+      demo.style.setProperty('--demo-s', (0.92 + 0.08 * anteil).toFixed(3));
+    };
+    addEventListener('scroll', demoScroll, { passive: true }); addEventListener('resize', demoScroll);
+    zeige(); demoScroll();
+  }
+
   // Kopf, Menü-Markierung, Parallax, Einblenden – per Scroll-Prüfung (zuverlässig auch in Safari)
   const kopf = $('#kopf');
   const spy = [...$$('[data-spy]')].map((a) => ({ a, el: document.getElementById(a.dataset.spy) }));

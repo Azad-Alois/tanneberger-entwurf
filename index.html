@@ -47,7 +47,7 @@
       <a href="#leistungen" data-spy="leistungen">Leistungen</a>
       <a href="#leistungen" data-bereich="3">Hausmeister</a>
       <a href="#leistungen" data-bereich="4">Garten</a>
-      <a href="#vorher" data-spy="vorher">Vorher / Nachher</a>
+      <a href="#demo" data-spy="demo">So läuft's</a>
       <a href="#check" data-spy="check">Entrümpelungs-Check</a>
             <a href="#fragen" data-spy="fragen">Fragen</a>
     </nav>
@@ -125,6 +125,34 @@
         <h2 class="gross-titel mittig enthuellen">Wir räumen, Sie atmen auf.<br /><em>Und kümmern uns um den Rest.</em></h2>
         <div class="bereich-reiter enthuellen" role="tablist" aria-label="Bereiche" data-reiter></div>
         <div class="leistung-raster" data-leistungen></div>
+      </div>
+    </section>
+
+    <!-- 3b DEMO-FENSTER (Muster: Salesforce-Demo-Karussell) -->
+    <section class="dunkel demo-sektion" id="demo">
+      <svg class="stern s1" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c2 11 9 18 20 20-11 2-18 9-20 20-2-11-9-18-20-20C11 18 18 11 20 0z"/></svg>
+      <svg class="stern s2" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c2 11 9 18 20 20-11 2-18 9-20 20-2-11-9-18-20-20C11 18 18 11 20 0z"/></svg>
+      <svg class="stern s3" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c2 11 9 18 20 20-11 2-18 9-20 20-2-11-9-18-20-20C11 18 18 11 20 0z"/></svg>
+      <div class="rahmen">
+        <p class="vorzeile mittig enthuellen">Zum Durchklicken</p>
+        <h2 class="gross-titel mittig enthuellen">So einfach läuft's –<br /><em>vom ersten Foto bis fertig.</em></h2>
+        <div class="demo" data-demo>
+          <div class="demo-leiste">
+            <div class="demo-reiter" role="tablist" aria-label="Geschäftsfelder" data-demo-reiter></div>
+            <div class="demo-steuer">
+              <button type="button" class="rund" data-demo-zurueck aria-label="Zurück"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 32 32"><path d="M19 9l-7 7 7 7"/></svg></button>
+              <button type="button" class="rund" data-demo-vor aria-label="Weiter"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 32 32"><path d="M13 9l7 7-7 7"/></svg></button>
+              <button type="button" class="rund" data-demo-pause aria-label="Anhalten"><svg class="icon" fill="currentColor" viewBox="0 0 32 32" data-symbol-pause><rect x="10" y="9" width="4" height="14" rx="1"/><rect x="18" y="9" width="4" height="14" rx="1"/></svg><svg class="icon" fill="currentColor" viewBox="0 0 32 32" data-symbol-play hidden><path d="M11 8l13 8-13 8z"/></svg></button>
+              <a class="knopf gold klein-knopf" href="#kontakt">Angebot anfragen</a>
+            </div>
+          </div>
+          <div class="demo-koerper">
+            <aside class="demo-links"><p class="demo-klein">Ablauf</p><ol data-demo-schritte></ol></aside>
+            <div class="demo-mitte" data-demo-mitte aria-live="polite"></div>
+            <aside class="demo-rechts" data-demo-rechts></aside>
+          </div>
+        </div>
+        <p class="vn-hinweis hell-leise">Beispielhafter Ablauf – jeder Auftrag wird individuell abgesprochen.</p>
       </div>
     </section>
 
@@ -596,6 +624,264 @@
       "Entsorgung",
       "Besenrein übergeben",
       "Fester Ansprechpartner"
+    ],
+    "demo": [
+      {
+        "name": "Entrümpelung",
+        "icon": "i-karton",
+        "intro": "Keller voll? Bald wieder Platz.",
+        "tipp": "Ein paar Fotos per WhatsApp reichen oft schon für ein festes Angebot.",
+        "schritte": [
+          {
+            "titel": "Fotos schicken",
+            "typ": "chat",
+            "nachrichten": [
+              {
+                "von": "kunde",
+                "text": "Hallo, unser Keller ist ca. 15 m² und ziemlich voll. Fotos anbei.",
+                "fotos": 3
+              },
+              {
+                "von": "julius",
+                "text": "Danke für die Fotos! Passt Donnerstag 10 Uhr für eine kurze Besichtigung?"
+              },
+              {
+                "von": "kunde",
+                "text": "Passt, bis Donnerstag!"
+              }
+            ]
+          },
+          {
+            "titel": "Besichtigung",
+            "typ": "termin",
+            "tag": "DO",
+            "zeit": "10:00",
+            "zeilen": [
+              "Besichtigung bei Ihnen vor Ort",
+              "Kostenlos und unverbindlich",
+              "Ca. 15 Minuten"
+            ]
+          },
+          {
+            "titel": "Festpreis",
+            "typ": "angebot",
+            "posten": [
+              "Räumung Kellerraum, ca. 15 m²",
+              "Möbel zerlegen und heraustragen",
+              "Abtransport und fachgerechte Entsorgung",
+              "Besenreine Übergabe"
+            ],
+            "fuss": "Festpreis – steht vorher fest"
+          },
+          {
+            "titel": "Räumung",
+            "typ": "liste",
+            "punkte": [
+              "Regale und Möbel zerlegt",
+              "Kartons und Säcke heraus",
+              "Getrennt: Holz, Metall, Elektro, Rest",
+              "Abtransport zur Entsorgung",
+              "Boden gefegt"
+            ]
+          },
+          {
+            "titel": "Übergabe",
+            "typ": "fertig",
+            "text": "Keller leer und besenrein. Auf Wunsch mit Fotos per WhatsApp.",
+            "stempel": "BESEN-<br>REIN ✓"
+          }
+        ]
+      },
+      {
+        "name": "Haushaltsauflösung",
+        "icon": "i-haus",
+        "intro": "Ein ganzer Haushalt. Ein Ansprechpartner.",
+        "tipp": "Persönliche Unterlagen, Fotos und Wertsachen legen wir beim Räumen beiseite.",
+        "schritte": [
+          {
+            "titel": "Erstes Gespräch",
+            "typ": "chat",
+            "nachrichten": [
+              {
+                "von": "kunde",
+                "text": "Wir müssen die Wohnung meiner Mutter auflösen, 3 Zimmer, 2. Stock ohne Aufzug."
+              },
+              {
+                "von": "julius",
+                "text": "Das tut mir leid. Ich nehme Ihnen das gern ab – wann darf ich mir die Wohnung ansehen?"
+              }
+            ]
+          },
+          {
+            "titel": "Besichtigung",
+            "typ": "termin",
+            "tag": "MO",
+            "zeit": "16:30",
+            "zeilen": [
+              "Gemeinsamer Rundgang",
+              "Was bleibt, was kommt weg?",
+              "Schlüsselübergabe besprechen"
+            ]
+          },
+          {
+            "titel": "Festpreis",
+            "typ": "angebot",
+            "posten": [
+              "Auflösung 3-Zimmer-Wohnung",
+              "Treppen ohne Aufzug eingeplant",
+              "Entsorgung aller Gegenstände",
+              "Besenreine Übergabe an den Vermieter"
+            ],
+            "fuss": "Festpreis – steht vorher fest"
+          },
+          {
+            "titel": "Auflösung",
+            "typ": "liste",
+            "punkte": [
+              "Persönliches beiseitegelegt",
+              "Küche und Schränke abgebaut",
+              "Alle Räume geleert",
+              "Fachgerecht entsorgt",
+              "Wohnung gefegt"
+            ]
+          },
+          {
+            "titel": "Schlüssel zurück",
+            "typ": "fertig",
+            "text": "Wohnung besenrein – bereit für die Übergabe an den Vermieter.",
+            "stempel": "BESEN-<br>REIN ✓"
+          }
+        ]
+      },
+      {
+        "name": "Hausmeister",
+        "icon": "i-werkzeug",
+        "intro": "Ihr Haus in festen Händen.",
+        "tipp": "Einmalig oder im festen Turnus – wöchentlich, 14-täglich oder monatlich.",
+        "schritte": [
+          {
+            "titel": "Anfrage",
+            "typ": "chat",
+            "nachrichten": [
+              {
+                "von": "kunde",
+                "text": "Wir suchen einen Hausmeister für ein Mehrfamilienhaus mit 8 Parteien."
+              },
+              {
+                "von": "julius",
+                "text": "Gern! Ich komme vorbei, wir gehen das Haus zusammen durch und legen fest, was regelmäßig anfällt."
+              }
+            ]
+          },
+          {
+            "titel": "Wochenplan",
+            "typ": "plan",
+            "zeilen": [
+              [
+                "Mo",
+                "Mülltonnen raus"
+              ],
+              [
+                "Di",
+                "Mülltonnen rein"
+              ],
+              [
+                "Mi",
+                "Kontrollgang Treppenhaus & Keller"
+              ],
+              [
+                "Fr",
+                "Außenanlage & Eingang"
+              ],
+              [
+                "Winter",
+                "Räumen & Streuen"
+              ]
+            ]
+          },
+          {
+            "titel": "Kontrollgang",
+            "typ": "liste",
+            "punkte": [
+              "Treppenhaus-Beleuchtung geprüft",
+              "Leuchtmittel 2. OG gewechselt",
+              "Kellertüren geschlossen",
+              "Mülltonnenplatz sauber",
+              "Auffälligkeiten an Verwaltung gemeldet"
+            ]
+          },
+          {
+            "titel": "Alles erledigt",
+            "typ": "fertig",
+            "text": "Ihr Haus ist versorgt – und Sie haben einen festen Ansprechpartner vor Ort."
+          }
+        ]
+      },
+      {
+        "name": "Garten",
+        "icon": "i-laub",
+        "intro": "Gepflegt. Das ganze Jahr.",
+        "tipp": "Grünschnitt nehmen wir gleich mit – Sie müssen nichts entsorgen.",
+        "schritte": [
+          {
+            "titel": "Fotos schicken",
+            "typ": "chat",
+            "nachrichten": [
+              {
+                "von": "kunde",
+                "text": "Hecke ca. 25 m lang, Rasen ca. 200 m². Geht das regelmäßig?",
+                "fotos": 2
+              },
+              {
+                "von": "julius",
+                "text": "Klar. Ich schlage Ihnen einen Pflegeplan fürs Jahr vor – Grünschnitt nehme ich gleich mit."
+              }
+            ]
+          },
+          {
+            "titel": "Pflegeplan",
+            "typ": "plan",
+            "zeilen": [
+              [
+                "März",
+                "Beete säubern, Rasen vertikutieren"
+              ],
+              [
+                "Apr–Okt",
+                "Rasen mähen alle 2 Wochen"
+              ],
+              [
+                "Juni",
+                "Hecke in Form schneiden"
+              ],
+              [
+                "Sept",
+                "Zweiter Heckenschnitt"
+              ],
+              [
+                "Nov",
+                "Laub entfernen, Wege frei"
+              ]
+            ]
+          },
+          {
+            "titel": "Pflegetermin",
+            "typ": "liste",
+            "punkte": [
+              "Rasen gemäht, Kanten sauber",
+              "Hecke geschnitten",
+              "Beete von Unkraut befreit",
+              "Wege gekehrt",
+              "Grünschnitt abgefahren"
+            ]
+          },
+          {
+            "titel": "Fertig",
+            "typ": "fertig",
+            "text": "Garten gepflegt, Grünschnitt weg – bis zum nächsten Termin."
+          }
+        ]
+      }
     ]
   }
   </script>
