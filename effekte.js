@@ -41,7 +41,7 @@
 
   // Leistungen mit Reitern
   const alleLeistungen = daten.bereiche.flatMap((b) => b.leistungen);
-  $('[data-anzahl-leistungen]').textContent = alleLeistungen.length;
+  $$('[data-anzahl-leistungen]').forEach((el) => { el.textContent = alleLeistungen.length; });
   const reiter = $('[data-reiter]'), raster = $('[data-leistungen]');
   reiter.innerHTML = daten.bereiche.map((b, i) => `<button type="button" role="tab" data-i="${i}" aria-selected="${i === 0}">${b.name}</button>`).join('');
   const zeigeBereich = (i) => {
@@ -110,7 +110,7 @@
   // Einsatzgebiet
   const orteBox = $('[data-orte]'), gebietErgebnis = $('[data-gebiet-ergebnis]');
   const orte = daten.gebiet.flatMap((g) => g.orte.map((ort) => ({ ort, stufe: g.stufe })));
-  $('[data-anzahl-orte]').textContent = orte.length;
+  $$('[data-anzahl-orte]').forEach((el) => { el.textContent = orte.length; });
   orteBox.innerHTML = orte.map((x, i) => `<button type="button" class="${x.stufe}" data-i="${i}" aria-pressed="false">${x.ort}</button>`).join('');
   const zeigeOrt = (i) => {
     const { ort, stufe } = orte[i];
