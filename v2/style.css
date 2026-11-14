@@ -17,7 +17,7 @@ section{position:relative}
 .hell{background:var(--grund)} .hell2{background:var(--grund2)}
 .dunkel{background:var(--tanne);color:var(--hell-text)} .dunkel2{background:var(--tanne2);color:var(--hell-text)}
 .hell-leise{color:rgba(238,242,236,.72)}
-.vorzeile{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.2em;font-size:.74rem;font-weight:700;color:var(--gold);margin:0 0 1.1rem}
+.vorzeile{display:inline-flex;align-items:center;gap:.6rem;text-transform:none;letter-spacing:0;font-size:.74rem;font-weight:700;color:var(--gold);margin:0 0 1.1rem}
 .dunkel .vorzeile,.dunkel2 .vorzeile{color:var(--licht)}
 .vorzeile::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
 p.vorzeile.mittig{display:flex;justify-content:center;width:max-content}
@@ -42,7 +42,7 @@ p.vorzeile.mittig{display:flex;justify-content:center;width:max-content}
 .zeichen-licht{stroke-dasharray:6 30;animation:licht 3s linear infinite}
 .wort{display:flex;flex-direction:column;line-height:1.05}
 .wort b{font-family:"Montserrat";font-size:1.02rem;letter-spacing:-.01em}
-.wort small{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--moos-hell)}
+.wort small{font-size:.68rem;letter-spacing:0;text-transform:none;color:var(--moos-hell)}
 .pille{display:flex;gap:.2rem}
 .pille a{padding:.5rem .9rem;border-radius:999px;text-decoration:none;font-size:.9rem;color:rgba(255,255,255,.78);transition:.2s}
 .pille a:hover,.pille a.aktiv{background:rgba(255,255,255,.12);color:#fff}
@@ -159,7 +159,7 @@ details[open] .plus{background:var(--gold)} details[open] .plus::after{transform
 .kontakt-liste li{display:flex;align-items:center;gap:1rem}
 .kontakt-liste .kreis{margin:0;width:46px;height:46px;border-radius:14px}
 .kontakt-liste .kreis .icon{width:20px;height:20px}
-.kontakt-liste small{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.14em;color:var(--leise)}
+.kontakt-liste small{display:block;font-size:.75rem;text-transform:none;letter-spacing:0;color:var(--leise)}
 .kontakt-liste a{font-weight:600;text-decoration:none}
 .formular{background:var(--flaeche);border:1px solid var(--linie);border-radius:26px;padding:clamp(1.3rem,3vw,2.2rem);display:grid;gap:1rem;box-shadow:0 30px 70px -45px rgba(21,44,34,.5)}
 .feld-paar{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
@@ -186,8 +186,8 @@ details[open] .plus{background:var(--gold)} details[open] .plus::after{transform
 .fuss-unten{max-width:1200px;margin:3rem auto 0;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.82rem}
 
 /* Wortmarke wie auf der Visitenkarte */
-.wort b{font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:1rem}
-.wort small{color:var(--gold-hell);font-weight:600;letter-spacing:.42em;font-size:.6rem;font-family:"Montserrat"}
+.wort b{font-weight:800;letter-spacing:0;text-transform:uppercase;font-size:1rem}
+.wort small{color:var(--gold-hell);font-weight:600;letter-spacing:0;font-size:.72rem;font-family:"Montserrat"}
 h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em}
 h1{letter-spacing:-.03em}
 
@@ -210,9 +210,9 @@ h1{letter-spacing:-.03em}
 .vn svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .vn .vorher{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0);-webkit-clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
 .vn-griff{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;margin-left:-1.5px;background:var(--gold-hell);pointer-events:none}
-.vn-griff::after{content:"‹ ›";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--tanne);color:var(--gold-hell);font:700 1.1rem/1 "Montserrat";letter-spacing:.2em;border:2px solid var(--gold-hell);box-shadow:0 10px 30px -8px rgba(0,0,0,.5)}
+.vn-griff::after{content:"‹ ›";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--tanne);color:var(--gold-hell);font:700 1.1rem/1 "Montserrat";letter-spacing:0;border:2px solid var(--gold-hell);box-shadow:0 10px 30px -8px rgba(0,0,0,.5)}
 .vn input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
-.vn-schild{position:absolute;top:1rem;padding:.4rem .9rem;border-radius:999px;font:700 .72rem/1 "Montserrat";letter-spacing:.2em;text-transform:uppercase;pointer-events:none}
+.vn-schild{position:absolute;top:1rem;padding:.4rem .9rem;border-radius:999px;font:700 .72rem/1 "Montserrat";letter-spacing:0;text-transform:none;pointer-events:none}
 .vn-schild.l{left:1rem;background:var(--tanne);color:var(--gold-hell)} .vn-schild.r{right:1rem;background:#fff;color:var(--tanne)}
 .vn-hinweis{text-align:center;color:var(--leise);font-size:.9rem;margin-top:1rem}
 
@@ -306,7 +306,7 @@ h1{letter-spacing:-.03em}
 .demo-koerper>*{min-width:0}
 .demo-koerper{display:grid;grid-template-columns:210px minmax(0,1fr) 270px;min-height:440px;border-radius:18px;overflow:hidden;background:var(--grund);color:var(--text)}
 .demo-links{background:var(--tanne);color:var(--hell-text);padding:1.1rem .8rem}
-.demo-klein{font:700 .68rem "Montserrat";letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hell);margin:0 0 .8rem .4rem}
+.demo-klein{font:700 .68rem "Montserrat";letter-spacing:0;text-transform:none;color:var(--gold-hell);margin:0 0 .8rem .4rem}
 .demo-links ol{list-style:none;margin:0;padding:0;display:grid;gap:.25rem}
 .demo-links button{width:100%;display:flex;align-items:center;gap:.6rem;text-align:left;padding:.6rem .6rem;border-radius:10px;border:0;background:transparent;color:rgba(241,238,229,.75);font:500 .9rem "Inter";cursor:pointer}
 .demo-links button b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(241,238,229,.35);font:700 .7rem "Montserrat";flex:none}
@@ -315,21 +315,21 @@ h1{letter-spacing:-.03em}
 .demo-links button.aktiv b{border-color:var(--gold-hell);color:var(--gold-hell)}
 .demo-mitte{position:relative;padding:1.4rem 1.6rem;min-width:0;background:var(--grund)}
 .demo-mitte h3{font-size:1.25rem;margin:0 0 1rem;display:flex;justify-content:space-between;align-items:center}
-.demo-mitte h3 small{font:600 .72rem "Inter";color:var(--leise);letter-spacing:.06em}
+.demo-mitte h3 small{font:600 .72rem "Inter";color:var(--leise);letter-spacing:0}
 .demo-rechts{border-left:1px solid var(--linie);background:#fff;padding:1.3rem 1.1rem;display:flex;flex-direction:column;gap:.9rem}
 .demo-rechts .wer{display:flex;align-items:center;gap:.7rem}
 .demo-rechts .wer svg{width:48px;height:48px;border-radius:50%;background:var(--tanne);padding:4px}
 .demo-rechts .wer b{display:block;font-family:"Montserrat"} .demo-rechts .wer small{color:var(--leise);font-size:.8rem}
 .demo-rechts .hinweis{font-size:.86rem;color:var(--leise);margin:0}
 .demo-rechts .tipp{background:var(--grund);border:1px solid var(--linie);border-radius:14px;padding:.8rem .9rem;font-size:.88rem}
-.demo-rechts .tipp b{display:block;font:700 .68rem "Montserrat";letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.demo-rechts .tipp b{display:block;font:700 .68rem "Montserrat";letter-spacing:0;text-transform:none;color:var(--gold);margin-bottom:.3rem}
 .demo-rechts .knopf{justify-content:center;padding:.75rem 1rem;font-size:.9rem}
 .demo-rechts .knopf.hell{background:var(--grund);color:var(--tanne);border:1px solid var(--linie)}
 .demo-rechts .unten{margin-top:auto;display:grid;gap:.5rem}
 /* Titelkarte */
 .demo-intro{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:2rem;color:#fff;background:radial-gradient(circle at 50% 40%,#2A4A3A,var(--tanne) 75%);animation:rein .5s both}
 .demo-intro svg.gross{width:64px;height:64px;color:var(--gold-hell);margin:0 auto .8rem;display:block}
-.demo-intro p{font:600 .8rem "Montserrat";letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hell);margin:0 0 .6rem}
+.demo-intro p{font:600 .8rem "Montserrat";letter-spacing:0;text-transform:none;color:var(--gold-hell);margin:0 0 .6rem}
 .demo-intro h3{display:block;font-size:clamp(1.5rem,3vw,2.3rem);color:#fff;margin:0 0 1.4rem}
 /* Bildschirme */
 .chat{display:grid;gap:.6rem;max-width:520px}
@@ -343,11 +343,11 @@ h1{letter-spacing:-.03em}
 .fotos span:nth-child(3){background:linear-gradient(110deg,#6F7E72 0 35%,#C49A62 35% 65%,#3A4741 65%)}
 .termin{display:flex;gap:1.2rem;align-items:center;background:#fff;border:1px solid var(--linie);border-radius:18px;padding:1.2rem;max-width:520px;animation:rein .5s both}
 .termin .tag{flex:none;width:96px;height:96px;border-radius:18px;background:var(--tanne);color:#fff;display:grid;place-items:center;text-align:center;font-family:"Montserrat"}
-.termin .tag b{display:block;font-size:.85rem;color:var(--gold-hell);letter-spacing:.2em} .termin .tag span{font-size:1.5rem;font-weight:700}
+.termin .tag b{display:block;font-size:.85rem;color:var(--gold-hell);letter-spacing:0} .termin .tag span{font-size:1.5rem;font-weight:700}
 .termin ul,.angebot ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
 .termin li::before{content:"✓ ";color:var(--gold);font-weight:700}
 .angebot{background:#fff;border:1px solid var(--linie);border-radius:14px;padding:1.3rem 1.4rem;max-width:520px;box-shadow:0 20px 40px -30px rgba(21,44,34,.5);animation:rein .5s both}
-.angebot .kopfzeile{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--tanne);padding-bottom:.6rem;margin-bottom:.8rem;font:700 .8rem "Montserrat";letter-spacing:.18em}
+.angebot .kopfzeile{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--tanne);padding-bottom:.6rem;margin-bottom:.8rem;font:700 .8rem "Montserrat";letter-spacing:0}
 .angebot .kopfzeile svg{width:30px;height:30px}
 .angebot li{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;padding-bottom:.45rem;border-bottom:1px dashed var(--linie)}
 .angebot li::after{content:"inkl.";color:var(--leise);font-size:.8rem}
@@ -363,7 +363,7 @@ h1{letter-spacing:-.03em}
 .liste li i::after{content:"✓";opacity:0;animation:einblenden .2s both;animation-delay:var(--v)}
 @keyframes einblenden{to{opacity:1}}
 .fertig{display:grid;place-items:center;align-content:center;text-align:center;min-height:330px;animation:rein .5s both}
-.fertig .stempel{width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);display:grid;place-items:center;color:var(--gold);font:800 .8rem/1.2 "Montserrat";letter-spacing:.12em;transform:rotate(-8deg);margin-bottom:1rem;animation:stempel .6s cubic-bezier(.2,1.6,.4,1) both .15s}
+.fertig .stempel{width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);display:grid;place-items:center;color:var(--gold);font:800 .8rem/1.2 "Montserrat";letter-spacing:0;transform:rotate(-8deg);margin-bottom:1rem;animation:stempel .6s cubic-bezier(.2,1.6,.4,1) both .15s}
 @keyframes stempel{from{transform:scale(1.8) rotate(-8deg);opacity:0}}
 .fertig p{max-width:24rem;color:var(--leise)}
 @media (max-width:1000px){.demo-koerper{grid-template-columns:180px minmax(0,1fr)}.demo-rechts{display:none}}
@@ -379,3 +379,7 @@ h1{letter-spacing:-.03em}
   .demo-mitte{min-height:400px;padding:1.1rem}
   .stern{display:none}
 }
+
+/* Kein gesperrter Text (Azat 14.11.): Überzeilen normal geschrieben, etwas größer */
+.vorzeile{font-size:.9rem;font-weight:650}
+.kontakt-liste small{font-size:.82rem}

@@ -38,7 +38,7 @@
       messer: [['Volumen', 'ca. 8 m³', 70], ['Getrennt entsorgt', '100 %', 100]],
       reiter: ['Fotos', 'Angebot', 'Durchführung'],
       ansichten: [
-        `<div class="box"><div class="box-kopf">Fotos vom Kunden <small data-fotozahl>3 Fotos · per WhatsApp</small></div><div class="fotoraster" data-fotos>${foto('voll1', 'Regal links', 'VORHER')}${foto('voll2', 'Hintere Ecke', 'VORHER')}${foto('voll3', 'Eingang', 'VORHER')}</div></div>`,
+        `<div class="box"><div class="box-kopf">Fotos vom Kunden <small data-fotozahl>3 Fotos · per WhatsApp</small></div><div class="fotoraster" data-fotos>${foto('voll1', 'Regal links', 'Vorher')}${foto('voll2', 'Hintere Ecke', 'Vorher')}${foto('voll3', 'Eingang', 'Vorher')}</div></div>`,
         `<div class="box angebot2"><div class="box-kopf" style="padding:0 0 10px;border:0"><span style="display:flex;align-items:center;gap:8px">${zeichenDunkel(26)} Angebot · Kellerräumung</span><span class="etikett gold" data-ang-status>Entwurf</span></div>
           <div class="a-zeile"><i>01</i><span>Räumung Kellerraum, ca. 15 m²</span><em>inklusive</em></div>
           <div class="a-zeile"><i>02</i><span>Möbel und Regale zerlegen, heraustragen</span><em>inklusive</em></div>
@@ -59,7 +59,7 @@
         await a.warte(1200); await a.pfad(3); await a.reiter(2);
         await a.abhaken('[data-check] li');
         await a.pfad(5); await a.reiter(0);
-        await a.ersetzeFotos(['leer1', 'leer2', 'leer1'], ['Regal links', 'Hintere Ecke', 'Eingang'], 'NACHHER');
+        await a.ersetzeFotos(['leer1', 'leer2', 'leer1'], ['Regal links', 'Hintere Ecke', 'Eingang'], 'Nachher');
         await a.nachricht('j', 'Fertig – Keller ist leer und besenrein. Fotos anbei.', '11:42', ['leer1', 'leer2']);
         await a.warte(2200);
       } },
@@ -140,7 +140,7 @@
           ${[['Rasen mähen', [[3, 10, '#2F5A44', 'alle 2 Wochen']]], ['Heckenschnitt', [[5, 6, '#4F7E48', 'Juni'], [8, 9, '#4F7E48', 'Sept']]], ['Beete & Unkraut', [[2, 9, '#B98A3E', 'monatlich']]], ['Laub', [[9, 11, '#8A6420', 'Herbst']]], ['Winterdienst', [[0, 2, '#5B7DA3', 'bei Schnee'], [11, 12, '#5B7DA3', '']]]]
             .map(([n, bs]) => `<div class="n">${n}</div><div class="spur">${bs.map(([von, bis, farbe, t]) => `<div class="balken" style="left:${von / 12 * 100}%;width:${(bis - von) / 12 * 100}%;background:${farbe}">${t}</div>`).join('')}</div>`).join('')}
          </div></div>`,
-        `<div class="box"><div class="box-kopf">Heckenschnitt Juni <small>Fotos per WhatsApp</small></div><div class="fotoraster" style="grid-template-columns:1fr 1fr">${foto('heckeWild', 'Vorher', 'VORHER')}${foto('heckeGerade', 'Nachher', 'NACHHER')}</div></div>`,
+        `<div class="box"><div class="box-kopf">Heckenschnitt Juni <small>Fotos per WhatsApp</small></div><div class="fotoraster" style="grid-template-columns:1fr 1fr">${foto('heckeWild', 'Vorher', 'Vorher')}${foto('heckeGerade', 'Nachher', 'Nachher')}</div></div>`,
       ],
       ablauf: async (a) => {
         await a.nachricht('k', 'Hallo, wir suchen jemanden für Rasen und Hecke – regelmäßig. Geht das?', '18:30', ['heckeWild']);

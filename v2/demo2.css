@@ -55,7 +55,7 @@
 /* ===== App ===== */
 .app{position:absolute;inset:0;display:grid;grid-template-rows:52px 40px 58px 1fr;font:13px/1.45 "Inter",system-ui,sans-serif;color:#18241D;background:#F5F3EC}
 .app-kopf{display:flex;align-items:center;gap:16px;padding:0 18px;background:#fff;border-bottom:1px solid #E7E1D3}
-.app-logo{display:flex;align-items:center;gap:8px;font:800 13px "Montserrat";letter-spacing:.06em;color:#152C22;min-width:190px}
+.app-logo{display:flex;align-items:center;gap:8px;font:800 13px "Montserrat";letter-spacing:0;color:#152C22;min-width:190px}
 .app-logo svg{width:28px;height:28px}
 .app-suche{flex:1;max-width:420px;margin:0 auto;display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:9px;background:#F3F0E8;border:1px solid #E7E1D3;color:#8A928C}
 .app-suche svg{width:14px;height:14px}
@@ -71,7 +71,7 @@
 /* Statuspfad (Pfeile) */
 .app-pfad{display:flex;align-items:center;gap:14px;padding:0 18px;background:#FBFAF6;border-bottom:1px solid #E7E1D3}
 .app-pfad .titel{min-width:260px}
-.app-pfad .titel small{display:block;color:#8A928C;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.app-pfad .titel small{display:block;color:#8A928C;font-size:11px;letter-spacing:0;text-transform:none}
 .app-pfad .titel b{font:700 15px "Montserrat";color:#152C22}
 .pfad{flex:1;display:flex;height:34px}
 .pfad i{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-style:normal;font-weight:600;font-size:12px;color:#55615A;background:#ECE8DD;
@@ -89,7 +89,7 @@
 .karte .kk-kopf i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(217,181,106,.15);border:1px solid rgba(217,181,106,.45);color:var(--gold-hell);font:700 14px "Montserrat";font-style:normal}
 .karte .kk-kopf b{display:block;color:#fff;font:700 14px "Montserrat"}.karte .kk-kopf small{color:rgba(233,230,220,.6);font-size:11.5px}
 .karte dl{margin:0;display:grid;gap:8px}
-.karte dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(217,181,106,.85);font-weight:700}
+.karte dt{font-size:11.5px;letter-spacing:0;text-transform:none;color:rgba(217,181,106,.85);font-weight:700}
 .karte dd{margin:1px 0 0;color:#fff;font-weight:500}
 .karte .messer{margin-top:auto;display:grid;gap:9px}
 .karte .messer div{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:11.5px;color:rgba(233,230,220,.75)}
@@ -114,7 +114,7 @@
 .foto{position:relative;border-radius:9px;overflow:hidden;aspect-ratio:4/3;background:#DDD3C1}
 .foto svg{position:absolute;inset:0;width:100%;height:100%}
 .foto span{position:absolute;left:6px;bottom:6px;padding:2px 7px;border-radius:6px;background:rgba(21,44,34,.82);color:#fff;font-size:10.5px;font-weight:600}
-.foto em{position:absolute;right:6px;top:6px;font-style:normal;padding:2px 7px;border-radius:6px;background:#fff;color:#152C22;font-size:10px;font-weight:700;letter-spacing:.06em}
+.foto em{position:absolute;right:6px;top:6px;font-style:normal;padding:2px 7px;border-radius:6px;background:#fff;color:#152C22;font-size:10px;font-weight:700;letter-spacing:0}
 .foto.neu{animation:d2rein .5s both}
 /* Angebot */
 .angebot2{padding:16px 18px;display:grid;gap:4px;position:relative}
@@ -127,7 +127,7 @@
 .knopf2.gold{background:var(--gold-hell);color:#152C22}
 .knopf2.gedrueckt{transform:scale(.94)}
 .knopf2.ok2{background:#2F5A44;color:#fff}
-.stempel2{position:absolute;right:26px;top:40px;width:120px;height:120px;border-radius:50%;border:3px solid #2F5A44;color:#2F5A44;display:grid;place-items:center;text-align:center;font:800 12px/1.25 "Montserrat";letter-spacing:.1em;transform:rotate(-12deg) scale(0);opacity:0;transition:transform .5s cubic-bezier(.2,1.7,.4,1),opacity .3s}
+.stempel2{position:absolute;right:26px;top:40px;width:120px;height:120px;border-radius:50%;border:3px solid #2F5A44;color:#2F5A44;display:grid;place-items:center;text-align:center;font:800 12px/1.25 "Montserrat";letter-spacing:0;transform:rotate(-12deg) scale(0);opacity:0;transition:transform .5s cubic-bezier(.2,1.7,.4,1),opacity .3s}
 .stempel2.an{transform:rotate(-12deg) scale(1);opacity:.9}
 /* Checkliste mit Zeiten */
 .check2{list-style:none;margin:0;padding:6px 14px}
@@ -169,7 +169,7 @@
 .balken.an{transform:scaleX(1)}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .kpi{padding:12px 14px}
-.kpi small{display:block;color:#8A928C;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:650}
+.kpi small{display:block;color:#8A928C;font-size:11px;text-transform:none;letter-spacing:0;font-weight:650}
 .kpi b{font:700 22px "Montserrat";color:#152C22}
 .kpi em{font-style:normal;font-size:11.5px;color:#2F5A44;font-weight:600;margin-left:4px}
 
