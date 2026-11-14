@@ -10,6 +10,10 @@ Montserrat + Inter. Alle Firmendaten als JSON im `<script id="daten">`-Block von
 ## Offen (vor Livegang mit Julius klären)
 - Impressum/Datenschutz: voller Name, Anschrift, ggf. USt-IdNr.; Hoster (Domain liegt derzeit woanders, Mail bei Proton).
 - Einsatzgebiet (Orte sind Annahme Raum Freiburg), WhatsApp auf 0151 55931608?
-- Zusagen in FAQ/Leistungen bestätigen (Wertsachen beiseitelegen, ohne Anwesenheit, Elektro/Metall, Gewerbe).
+- Zusagen bestätigen (aus Konkurrenz-Recherche 14.11. übernommen): kostenlose Besichtigung, Festpreis, Wertanrechnung,
+  diskret, ohne Anwesenheit, Wertsachen beiseitelegen, Winterdienst früh/Wochenende.
+- Rechtliches vor Start: Anzeige Abfallbeförderung § 53 KrWG beim RP Freiburg; Gewerbeanmeldung für Hausmeister/Garten/
+  Winterdienst; nur unerhebliche Kleinreparaturen (keine Elektro/Sanitär/Maler – Anlage A HwO); keine Pflanzenschutzmittel
+  ohne Sachkunde; Baumfällung nur nach Baumschutzsatzung; Betriebshaftpflicht inkl. Winterdienst.
 - Echtes Foto von Julius + echte Vorher-Nachher-Fotos (derzeit Illustration).
 - Original-Logodatei vom Gestalter, falls vorhanden (aktuell nachgezeichnet).

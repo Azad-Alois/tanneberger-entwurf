@@ -54,6 +54,8 @@ $telefon   = zeile((string)($_POST['telefon'] ?? ''), 40);
 $email     = zeile((string)($_POST['email'] ?? ''), 150);
 $ort       = zeile((string)($_POST['ort'] ?? ''), 80);
 $leistung  = zeile((string)($_POST['leistung'] ?? ''), 80);
+$groesse   = zeile((string)($_POST['groesse'] ?? ''), 60);
+$zeitraum  = zeile((string)($_POST['zeitraum'] ?? ''), 60);
 $nachricht = mb_substr(trim(str_replace("\r", '', (string)($_POST['nachricht'] ?? ''))), 0, 3000);
 
 if ($name === '' || $telefon === '') {
@@ -72,7 +74,9 @@ $text = "Neue Anfrage über die Webseite\n"
       . "Telefon:   $telefon\n"
       . "E-Mail:    " . ($email ?: '–') . "\n"
       . "Ort:       " . ($ort ?: '–') . "\n"
-      . "Leistung:  " . ($leistung ?: '–') . "\n\n"
+      . "Leistung:  " . ($leistung ?: '–') . "\n"
+      . "Größe:     " . ($groesse ?: '–') . "\n"
+      . "Wann:      " . ($zeitraum ?: '–') . "\n\n"
       . "Nachricht:\n" . ($nachricht ?: '–') . "\n\n"
       . "--\nGesendet am " . date('d.m.Y \u\m H:i') . " Uhr über " . $konfig['domain'] . "\n";
 

@@ -127,7 +127,7 @@
   const form = $('[data-formular]'), meldung = $('[data-formular-meldung]'), knopf = $('[data-formular-knopf]');
   $('[data-feld-zeit]').value = Date.now();
   const perMail = () => {
-    const body = `Name: ${form.name.value}\nTelefon: ${form.telefon.value}\nE-Mail: ${form.email.value}\nOrt: ${form.ort.value}\nLeistung: ${form.leistung.value}\n\n${form.nachricht.value}`;
+    const body = `Name: ${form.name.value}\nTelefon: ${form.telefon.value}\nE-Mail: ${form.email.value}\nOrt: ${form.ort.value}\nLeistung: ${form.leistung.value}\nGröße: ${form.groesse.value}\nWann: ${form.zeitraum.value}\n\n${form.nachricht.value}`;
     location.href = `mailto:${f.mail}?subject=${encodeURIComponent('Anfrage über die Webseite')}&body=${encodeURIComponent(body)}`;
   };
   form.addEventListener('submit', async (e) => {

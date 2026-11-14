@@ -191,6 +191,13 @@ details[open] .plus{background:var(--gold)} details[open] .plus::after{transform
 h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em}
 h1{letter-spacing:-.03em}
 
+/* Versprechen */
+.versprechen{list-style:none;padding:0;margin:3rem 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.versprechen li{padding:1.4rem 1.5rem;border-radius:20px;border:1px solid rgba(217,181,106,.22);background:rgba(255,255,255,.03)}
+.versprechen b{display:flex;align-items:center;gap:.6rem;font-family:"Montserrat";font-size:1.08rem;color:#fff;margin-bottom:.35rem}
+.versprechen b::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;border:2px solid var(--gold-hell)}
+.versprechen span{color:rgba(241,238,229,.72);font-size:.95rem}
+
 /* Vorher / Nachher */
 .vn{position:relative;margin:3rem auto 0;max-width:1000px;aspect-ratio:16/9;border-radius:28px;overflow:hidden;border:1px solid var(--linie);box-shadow:0 40px 80px -45px rgba(21,44,34,.55);user-select:none;-webkit-user-select:none;touch-action:pan-y}
 .vn svg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -222,13 +229,13 @@ h1{letter-spacing:-.03em}
 
 @media (max-width:1000px){
   .pille{display:none}
-  .vier,.ablauf{grid-template-columns:1fr 1fr}
+  .vier,.ablauf,.versprechen{grid-template-columns:1fr 1fr}
   .leistung-raster{grid-template-columns:1fr 1fr}
   .fuss-raster{grid-template-columns:1fr 1fr}
 }
 @media (max-width:720px){
   .zwei,.faq-raster{grid-template-columns:1fr}
-  .vier,.ablauf,.leistung-raster,.feld-paar{grid-template-columns:1fr}
+  .vier,.ablauf,.leistung-raster,.feld-paar,.versprechen{grid-template-columns:1fr}
   .leistung{min-height:0}
   .kopf{inset:10px 10px auto}
   .kopf .tel-nr{display:none}
