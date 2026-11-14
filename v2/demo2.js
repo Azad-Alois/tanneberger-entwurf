@@ -1,5 +1,5 @@
-// Demo Entwurf 2: Programm-Oberfläche, die sich selbst bedient (Mauszeiger, Klicks, WhatsApp-Verlauf).
-// Je Geschäftsfeld ein Ablauf (Szene). Inhalte sind Beispiele; Firmendaten (Telefon, WhatsApp) kommen aus #daten.
+// Demo Entwurf 2: Inhalt wie das erste Demo-Fenster (Ablauf links anklickbar, Bildschirm in der Mitte, rechts direkt Julius),
+// Optik im Glasrahmen. Läuft von selbst (Mauszeiger klickt die Schritte), Klick auf einen Schritt hält an. Inhalte aus #daten.demo.
 (() => {
   const wurzel = document.querySelector('[data-d2]');
   if (!wurzel) return;
@@ -28,267 +28,176 @@
   };
   const foto = (sz, text, ecke = '') => `<div class="foto">${SZ[sz]}<span>${text}</span>${ecke ? `<em>${ecke}</em>` : ''}</div>`;
 
-  // ---------- Szenen ----------
-  const pfadStandard = ['Anfrage', 'Besichtigung', 'Angebot', 'Durchführung', 'Übergabe'];
-  const SZENEN = [
-    { name: 'Entrümpelung', icon: 'i-karton', intro: 'Keller voll?<br>Morgen wieder Platz.',
-      info: 'Fotos per WhatsApp, kostenlose Besichtigung, Festpreis-Angebot – dann wird geräumt, fachgerecht entsorgt und besenrein übergeben.',
-      nav: 'Aufträge', titel: 'Kellerräumung', unter: 'Auftrag 2026-114', pfad: pfadStandard,
-      kunde: { kurz: 'FB', name: 'Familie Becker', ort: 'Freiburg-Herdern', felder: [['Objekt', 'Keller, ca. 15 m²'], ['Zugang', '1 Treppe, kein Aufzug'], ['Besichtigung', 'Do, 10:00 Uhr'], ['Kontakt', 'WhatsApp']] },
-      messer: [['Volumen', 'ca. 8 m³', 70], ['Getrennt entsorgt', '100 %', 100]],
-      reiter: ['Fotos', 'Angebot', 'Durchführung'],
-      ansichten: [
-        `<div class="box"><div class="box-kopf">Fotos vom Kunden <small data-fotozahl>3 Fotos · per WhatsApp</small></div><div class="fotoraster" data-fotos>${foto('voll1', 'Regal links', 'Vorher')}${foto('voll2', 'Hintere Ecke', 'Vorher')}${foto('voll3', 'Eingang', 'Vorher')}</div></div>`,
-        `<div class="box angebot2"><div class="box-kopf" style="padding:0 0 10px;border:0"><span style="display:flex;align-items:center;gap:8px">${zeichenDunkel(26)} Angebot · Kellerräumung</span><span class="etikett gold" data-ang-status>Entwurf</span></div>
-          <div class="a-zeile"><i>01</i><span>Räumung Kellerraum, ca. 15 m²</span><em>inklusive</em></div>
-          <div class="a-zeile"><i>02</i><span>Möbel und Regale zerlegen, heraustragen</span><em>inklusive</em></div>
-          <div class="a-zeile"><i>03</i><span>Abtransport, getrennte fachgerechte Entsorgung</span><em>inklusive</em></div>
-          <div class="a-zeile"><i>04</i><span>Besenreine Übergabe</span><em>inklusive</em></div>
-          <div class="a-summe"><b>Festpreis – keine Nachforderungen</b><button class="knopf2 gold" data-annehmen>Angebot annehmen</button></div>
-          <div class="stempel2" data-stempel>ANGE-<br>NOMMEN<br>✓</div></div>`,
-        `<div class="box"><div class="box-kopf">Räumung · Donnerstag <small>Team Julius</small></div><ul class="check2" data-check>
-          ${[['Regale und Möbel zerlegt', '08:10'], ['Kartons und Säcke heraus', '09:05'], ['Getrennt: Holz, Metall, Elektro, Rest', '10:20'], ['Abtransport zur Entsorgung', '11:15'], ['Boden gefegt – besenrein', '11:40']].map(([t, z]) => `<li><i></i><span>${t}</span><time>${z}</time></li>`).join('')}</ul></div>`,
-      ],
-      ablauf: async (a) => {
-        await a.nachricht('k', 'Hallo, unser Keller ist ca. 15 m² und ziemlich voll. Was würde das kosten?', '08:12', ['voll1', 'voll2', 'voll3', 'voll1']);
-        await a.tippt(1200);
-        await a.nachricht('j', 'Danke für die Fotos! Ich schaue es mir gern an – passt Donnerstag 10 Uhr?', '08:15');
-        await a.schreibe('Passt, bis Donnerstag!'); await a.pfad(1);
-        await a.reiter(1); await a.warte(900); await a.pfad(2);
-        await a.klick('[data-annehmen]', (el) => { el.textContent = 'Angenommen ✓'; el.className = 'knopf2 ok2'; a.$('[data-ang-status]').className = 'etikett gruen'; a.$('[data-ang-status]').textContent = 'Angenommen'; a.$('[data-stempel]').classList.add('an'); });
-        await a.warte(1200); await a.pfad(3); await a.reiter(2);
-        await a.abhaken('[data-check] li');
-        await a.pfad(5); await a.reiter(0);
-        await a.ersetzeFotos(['leer1', 'leer2', 'leer1'], ['Regal links', 'Hintere Ecke', 'Eingang'], 'Nachher');
-        await a.nachricht('j', 'Fertig – Keller ist leer und besenrein. Fotos anbei.', '11:42', ['leer1', 'leer2']);
-        await a.warte(2200);
-      } },
-    { name: 'Haushaltsauflösung', icon: 'i-haus', intro: 'Ein ganzer Haushalt.<br>Ein Ansprechpartner.',
-      info: 'Raum für Raum geräumt. Persönliche Unterlagen, Fotos und Wertsachen legen wir beiseite und übergeben sie Ihnen.',
-      nav: 'Aufträge', titel: 'Haushaltsauflösung 3 Zimmer', unter: 'Auftrag 2026-121', pfad: pfadStandard,
-      kunde: { kurz: 'SK', name: 'Sabine K.', ort: 'Emmendingen', felder: [['Objekt', '3-Zimmer-Wohnung, 2. OG'], ['Zugang', 'Treppe, kein Aufzug'], ['Übergabe', 'an den Vermieter'], ['Schlüssel', 'bei Julius']] },
-      messer: [['Fortschritt', '6 von 6 Räumen', 100], ['Beiseitegelegt', '4 Dinge', 100]],
-      reiter: ['Räume', 'Beiseitegelegt'],
-      ansichten: [
-        `<div class="raeume">${['Wohnzimmer', 'Küche', 'Schlafzimmer', 'Bad', 'Flur', 'Keller'].map((r) => `<div class="box raum"><div class="fring" data-ring>0%</div><div><b>${r}</b><small data-rs>wartet</small></div></div>`).join('')}</div>
-         <div class="box" style="margin-top:10px"><div class="box-kopf">Ansicht vor der Auflösung <small>Besichtigung Mo</small></div><div class="fotoraster">${foto('zimmer', 'Wohnzimmer')}${foto('voll2', 'Keller')}${foto('voll3', 'Flur')}</div></div>`,
-        `<div class="box"><div class="box-kopf">Für Sie beiseitegelegt <small>wird bei Übergabe ausgehändigt</small></div><ul class="beiseite" data-beiseite style="list-style:none;margin:0;padding:0"></ul></div>`,
-      ],
-      ablauf: async (a) => {
-        await a.nachricht('k', 'Wir müssen die Wohnung meiner Mutter auflösen. 3 Zimmer, 2. Stock ohne Aufzug.', '17:02');
-        await a.tippt(1200);
-        await a.nachricht('j', 'Das tut mir leid. Ich nehme Ihnen das gern ab. Montag 16:30 Besichtigung?', '17:06');
-        await a.schreibe('Ja, danke. Bitte Fotos und Unterlagen aufheben.'); await a.pfad(1); await a.warte(500); await a.pfad(3);
-        const ringe = a.$$('[data-ring]'), status = a.$$('[data-rs]');
-        for (let i = 0; i < ringe.length; i++) {
-          await a.zeige(ringe[i]); ringe[i].style.setProperty('--p', 100); status[i].textContent = 'geräumt ✓';
-          let n = 0; const t = setInterval(() => { n = Math.min(100, n + 10); ringe[i].textContent = `${n}%`; if (n >= 100) clearInterval(t); }, 70);
-          await a.warte(450);
-        }
-        await a.reiter(1);
-        const liste = a.$('[data-beiseite]');
-        for (const [e, t, z] of [['📷', 'Fotoalben (3)', 'Schlafzimmer'], ['📁', 'Ordner mit Dokumenten', 'Wohnzimmer'], ['💍', 'Schmuckkästchen', 'Schlafzimmer'], ['✉️', 'Briefe und Postkarten', 'Flur']]) {
-          liste.insertAdjacentHTML('beforeend', `<li class="neu"><i>${e}</i><span style="flex:1"><b style="font-weight:600">${t}</b><br><small style="color:#8A928C">gefunden: ${z}</small></span><span class="etikett gold">beiseitegelegt</span></li>`);
-          await a.warte(550);
-        }
-        await a.pfad(5);
-        await a.nachricht('j', 'Wohnung ist leer und besenrein. Die Fotoalben und Unterlagen bringe ich Ihnen vorbei.', '15:20');
-        await a.warte(2200);
-      } },
-    { name: 'Hausmeisterservice', icon: 'i-werkzeug', intro: 'Ihr Haus<br>in festen Händen.',
-      info: 'Fester Turnus, Kontrollgänge, Mülltonnen, kleine Handgriffe und Winterdienst – Meldungen kommen sofort per WhatsApp.',
-      nav: 'Objekte', titel: 'Wohnanlage Lindenweg 12', unter: '8 Parteien · Hausmeisterservice', pfad: ['Vertrag', 'Wochenplan', 'Kontrollgang', 'Meldung', 'Erledigt'],
-      kunde: { kurz: 'HV', name: 'Hausverwaltung', ort: 'Denzlingen', felder: [['Objekt', 'MFH, 8 Parteien'], ['Turnus', 'wöchentlich'], ['Winterdienst', 'ab 6:30 Uhr'], ['Meldungen', 'per WhatsApp']] },
-      messer: [['Kontrollgänge November', '4 von 4', 100], ['Offene Meldungen', '0', 100]],
-      reiter: ['Wochenplan', 'Meldungen'],
-      ansichten: [
-        `<div class="box"><div class="box-kopf">Woche 47 <small>17.–21. November</small></div><div class="woche" data-woche>
-          <div class="kt"></div>${['Mo', 'Di', 'Mi', 'Do', 'Fr'].map((d) => `<div class="kt">${d}</div>`).join('')}
-          ${['07:00', '10:00', '15:00'].map((z) => `<div class="zt">${z}</div>${'<div></div>'.repeat(5)}`).join('')}</div></div>`,
-        `<div class="box"><div class="box-kopf">Meldungen <small>Lindenweg 12</small></div>
-          <div class="meldung" data-meldung><div class="mini" data-mini>${SZ.lampeAus}</div><div><b>Licht Treppenhaus 2. OG defekt</b><small>gemeldet von Mieterin, 2. OG · heute 07:48</small></div><span class="etikett rot" data-mstatus>Offen</span></div>
-          <div class="meldung"><div class="mini">${SZ.leer2}</div><div><b>Kellertür schließt nicht richtig</b><small>Kontrollgang · Mi</small></div><span class="etikett gruen">Erledigt</span></div>
-          <div class="meldung"><div class="mini">${SZ.heckeGerade}</div><div><b>Laub am Eingang</b><small>Kontrollgang · Fr</small></div><span class="etikett gruen">Erledigt</span></div></div>`,
-      ],
-      ablauf: async (a) => {
-        await a.pfad(1);
-        const zellen = a.$$('[data-woche]>div:not(.kt):not(.zt)');
-        for (const [i, typ, t] of [[0, 'a', 'Mülltonnen raus'], [6, 'b', 'Kontrollgang'], [1, 'a', 'Mülltonnen rein'], [12, 'c', 'Treppenhaus prüfen'], [4, 'b', 'Außenanlage'], [14, 'c', 'Winterdienst-Check']]) {
-          zellen[i].insertAdjacentHTML('beforeend', `<span class="ev ${typ}">${t}</span>`); await a.warte(380);
-        }
-        await a.pfad(2);
-        await a.nachricht('k', 'Hallo Julius, im 2. OG ist das Licht im Treppenhaus aus.', '07:49');
-        await a.reiter(1); await a.pfad(3);
-        await a.tippt(1000);
-        await a.nachricht('j', 'Danke für die Info – ich bin um 10 Uhr sowieso im Haus und kümmere mich drum.', '07:52');
-        await a.warte(800);
-        await a.klick('[data-meldung]', () => { a.$('[data-mini]').innerHTML = SZ.lampeAn; const s = a.$('[data-mstatus]'); s.className = 'etikett gruen'; s.textContent = 'Erledigt'; });
-        await a.pfad(5);
-        await a.nachricht('j', 'Leuchtmittel im 2. OG gewechselt, Licht geht wieder ✓', '10:14', ['lampeAn']);
-        await a.warte(2200);
-      } },
-    { name: 'Garten & Grünflächen', icon: 'i-laub', intro: 'Gepflegt.<br>Das ganze Jahr.',
-      info: 'Rasen, Hecken, Beete, Laub und Winterdienst – nach einem festen Pflegeplan. Grünschnitt nehmen wir gleich mit.',
-      nav: 'Objekte', titel: 'Grundstückspflege', unter: 'Pflegevertrag 2027', pfad: ['Anfrage', 'Besichtigung', 'Pflegeplan', 'Pflege', 'Laufend'],
-      kunde: { kurz: 'MW', name: 'Familie Wagner', ort: 'Gundelfingen', felder: [['Rasen', 'ca. 200 m²'], ['Hecke', 'ca. 25 m'], ['Turnus', 'alle 2 Wochen'], ['Grünschnitt', 'wird mitgenommen']] },
-      messer: [['Pflegetermine 2027', '18 geplant', 72], ['Grünschnitt entsorgt', 'inklusive', 100]],
-      reiter: ['Jahresplan', 'Vorher / Nachher'],
-      ansichten: [
-        `<div class="kpis"><div class="box kpi"><small>Rasenfläche</small><b>200</b><em>m²</em></div><div class="box kpi"><small>Hecke</small><b>25</b><em>m</em></div><div class="box kpi"><small>Nächster Termin</small><b>Di</b><em>08:00 Uhr</em></div></div>
-         <div class="box" style="margin-top:10px"><div class="box-kopf">Pflegeplan 2027 <small>Beispiel</small></div><div class="jahr" style="padding:4px 14px 10px">
-          <div class="m"></div>${'JFMAMJJASOND'.split('').map((m) => `<div class="m">${m}</div>`).join('')}
-          ${[['Rasen mähen', [[3, 10, '#2F5A44', 'alle 2 Wochen']]], ['Heckenschnitt', [[5, 6, '#4F7E48', 'Juni'], [8, 9, '#4F7E48', 'Sept']]], ['Beete & Unkraut', [[2, 9, '#B98A3E', 'monatlich']]], ['Laub', [[9, 11, '#8A6420', 'Herbst']]], ['Winterdienst', [[0, 2, '#5B7DA3', 'bei Schnee'], [11, 12, '#5B7DA3', '']]]]
-            .map(([n, bs]) => `<div class="n">${n}</div><div class="spur">${bs.map(([von, bis, farbe, t]) => `<div class="balken" style="left:${von / 12 * 100}%;width:${(bis - von) / 12 * 100}%;background:${farbe}">${t}</div>`).join('')}</div>`).join('')}
-         </div></div>`,
-        `<div class="box"><div class="box-kopf">Heckenschnitt Juni <small>Fotos per WhatsApp</small></div><div class="fotoraster" style="grid-template-columns:1fr 1fr">${foto('heckeWild', 'Vorher', 'Vorher')}${foto('heckeGerade', 'Nachher', 'Nachher')}</div></div>`,
-      ],
-      ablauf: async (a) => {
-        await a.nachricht('k', 'Hallo, wir suchen jemanden für Rasen und Hecke – regelmäßig. Geht das?', '18:30', ['heckeWild']);
-        await a.tippt(1000);
-        await a.nachricht('j', 'Klar! Ich mache Ihnen einen Pflegeplan fürs ganze Jahr – Grünschnitt nehme ich gleich mit.', '18:34');
-        await a.pfad(1); await a.warte(400); await a.pfad(2);
-        for (const b of a.$$('.balken')) { b.classList.add('an'); await a.warte(260); }
-        await a.zeige(a.$$('.balken')[2]); await a.warte(900);
-        await a.pfad(3); await a.reiter(1); await a.warte(900);
-        await a.nachricht('j', 'Hecke ist geschnitten, Grünschnitt ist weg. Nächster Termin Dienstag.', '16:05', ['heckeGerade']);
-        await a.pfad(5); await a.warte(2200);
-      } },
+  // Bilder je Geschäftsfeld (gezeichnete Illustrationen, bis echte Fotos da sind)
+  const BILDER = [
+    { vorher: ['voll1', 'voll2', 'voll3'], nachher: ['leer1', 'leer2', 'leer1'] },
+    { vorher: ['zimmer', 'voll2', 'voll3'], nachher: ['leer2', 'leer1', 'leer2'] },
+    { vorher: ['lampeAus'], nachher: ['lampeAn', 'leer2', 'heckeGerade'] },
+    { vorher: ['heckeWild', 'heckeWild'], nachher: ['heckeGerade', 'heckeGerade', 'leer2'] },
   ];
+  const DEMO = daten.demo || [];
+  const NAMEN = ['Regal links', 'Hintere Ecke', 'Eingang'];
+
+  // ---------- Bildschirme ----------
+  const kopfzeile = (titel, unter) => `<div class="e-kopf"><h4>${titel}</h4><span>${unter}</span></div>`;
+  const BS = {
+    chat: (x, b) => `${kopfzeile(x.titel, 'per WhatsApp')}<div class="e-wa"><div class="wa-kopf"><i>${zeichen(26)}</i><div><b>Julius · Tanneberger</b><small>online</small></div></div><div class="wa-verlauf" data-verlauf></div></div>`,
+    termin: (x) => {
+      const tagNr = { MO: 16, DI: 17, MI: 18, DO: 19, FR: 20 }[x.tag] || 19;
+      const tage = Array.from({ length: 35 }, (_, i) => i - 6 + 1).map((n) => `<span class="${n === tagNr ? 'an' : ''}${n < 1 || n > 30 ? ' leer' : ''}">${n >= 1 && n <= 30 ? n : ''}</span>`).join('');
+      return `${kopfzeile(x.titel, 'kostenlos · unverbindlich')}<div class="e-termin"><div class="box e-kal"><div class="box-kopf">November 2026</div><div class="e-wt">${'MDMDFSS'.split('').map((t) => `<b>${t}</b>`).join('')}</div><div class="e-tage">${tage}</div></div>
+        <div class="box e-tdetail"><div class="e-uhr"><small>${{ MO: 'Montag', DI: 'Dienstag', MI: 'Mittwoch', DO: 'Donnerstag', FR: 'Freitag' }[x.tag] || ''}, ${tagNr}.11.</small><b>${x.zeit} Uhr</b></div>
+        <ul>${x.zeilen.map((z, i) => `<li style="--v:${300 + i * 250}ms"><i>✓</i>${z}</li>`).join('')}</ul><span class="etikett gruen e-best" data-bestaetigt>Termin bestätigt</span></div></div>`;
+    },
+    angebot: (x, b) => `${kopfzeile(x.titel, 'Angebot')}<div class="box angebot2 e-ang"><div class="box-kopf" style="padding:0 0 10px;border:0"><span style="display:flex;align-items:center;gap:8px">${zeichenDunkel(26)} Angebot · ${DEMO[b].name}</span><span class="etikett gold" data-ang-status>Neu</span></div>
+      ${x.posten.map((p, i) => `<div class="a-zeile" style="--v:${i * 180}ms"><i>0${i + 1}</i><span>${p}</span><em>inklusive</em></div>`).join('')}
+      <div class="a-summe"><b>${x.fuss}</b><button type="button" class="knopf2 gold" data-annehmen>Angebot annehmen</button></div><div class="stempel2" data-stempel>ANGE-<br>NOMMEN<br>✓</div></div>`,
+    liste: (x) => `${kopfzeile(x.titel, 'heute')}<div class="box"><ul class="check2" data-check>${x.punkte.map((p, i) => `<li><i></i><span>${p}</span><time>${String(8 + Math.floor((10 + i * 35) / 60)).padStart(2, '0')}:${String((10 + i * 35) % 60).padStart(2, '0')}</time></li>`).join('')}</ul></div>`,
+    plan: (x) => `${kopfzeile(x.titel, 'fest vereinbart')}<div class="box e-plan">${x.zeilen.map(([a, t], i) => `<div style="--v:${i * 160}ms"><b>${a}</b><span>${t}</span></div>`).join('')}</div>`,
+    fertig: (x, b) => `${kopfzeile(x.titel, 'abgeschlossen')}<div class="e-fertig"><div class="e-fotos">${BILDER[b].nachher.slice(0, 3).map((s, i) => `<div class="foto neu" style="animation-delay:${i * 150}ms">${SZ[s]}<em>Nachher</em></div>`).join('')}</div>
+      <div class="e-abschluss"><div class="stempel2 an e-st">${(x.stempel || 'ERLEDIGT ✓').replace('BESEN-<br>REIN', 'BESEN-<br>REIN')}</div><p>${x.text}</p></div></div>`,
+  };
 
   // ---------- Grundgerüst ----------
-  wurzel.innerHTML = `<div class="d2-leiste"><div class="d2-reiter" role="tablist" aria-label="Geschäftsfelder">${SZENEN.map((s, i) => `<button type="button" role="tab" data-i="${i}"><span class="rk">${ic(s.icon)}</span>${s.name}<span class="lauf"></span></button>`).join('')}</div>
+  wurzel.innerHTML = `<div class="d2-leiste"><div class="d2-reiter" role="tablist" aria-label="Geschäftsfelder">${DEMO.map((s, i) => `<button type="button" role="tab" data-i="${i}"><span class="rk">${ic(s.icon)}</span>${s.name}<span class="lauf"></span></button>`).join('')}</div>
     <div class="d2-steuer"><button type="button" class="d2-rund" data-zur aria-label="Zurück"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7 7 7"/></svg></button>
     <button type="button" class="d2-rund" data-vor aria-label="Weiter"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 9l7 7-7 7"/></svg></button>
     <button type="button" class="d2-rund" data-pause aria-label="Anhalten"><svg viewBox="0 0 32 32" fill="currentColor" data-sp><rect x="10" y="9" width="4" height="14" rx="1"/><rect x="18" y="9" width="4" height="14" rx="1"/></svg><svg viewBox="0 0 32 32" fill="currentColor" data-sy style="display:none"><path d="M11 8l13 8-13 8z"/></svg></button>
     <a class="d2-cta" href="#kontakt">Angebot anfragen</a></div></div>
-    <div class="d2-buehne" data-buehne><div class="d2-skala" data-skala></div>
-      <button type="button" class="d2-details" data-details>Details</button><div class="d2-info" data-info></div></div>`;
+    <div class="d2-buehne" data-buehne><div class="d2-skala" data-skala></div></div>`;
   const buehne = wurzel.querySelector('[data-buehne]'), skala = wurzel.querySelector('[data-skala]');
   const reiterKn = [...wurzel.querySelectorAll('.d2-reiter button')];
 
-  // Skalierung: Designgröße 1140×680 (breit) bzw. 600×860 (Handy, einspaltig)
-  let B = 1140, H = 680, faktor = 1;
+  // Skalierung: breit 1140×660; Handy 440 breit, Höhe so, dass das Fenster zwischen Kopf- und Fußleiste passt
+  let B = 1140, H = 660, faktor = 1, schmal = false;
   const passe = () => {
-    const w = buehne.clientWidth;
-    const schmal = w < 700;
-    B = schmal ? 440 : 1140; H = schmal ? 780 : 680;
+    const w = buehne.clientWidth; schmal = w < 700;
+    B = schmal ? 440 : 1140; faktor = w / B;
+    if (schmal) {
+      const kopfH = (document.getElementById('kopf')?.getBoundingClientRect().bottom || 70) + 12;
+      const leiste = document.querySelector('.leiste'); const fussH = leiste ? innerHeight - leiste.getBoundingClientRect().top + 12 : 90;
+      const rahmenRest = wurzel.offsetHeight - buehne.offsetHeight;
+      const verfuegbar = innerHeight - kopfH - fussH - rahmenRest;
+      H = Math.max(520, Math.min(820, verfuegbar / faktor));
+    } else H = 660;
     skala.classList.toggle('schmal', schmal);
     skala.style.width = `${B}px`; skala.style.height = `${H}px`;
-    faktor = w / B; skala.style.transform = `scale(${faktor})`; buehne.style.height = `${H * faktor}px`;
+    skala.style.transform = `scale(${faktor})`; buehne.style.height = `${H * faktor}px`;
   };
 
-  const appHTML = (s) => `<div class="app">
-    <div class="app-kopf"><div class="app-logo">${zeichenDunkel(28)}TANNEBERGER</div>
-      <div class="app-suche"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="14" cy="14" r="8"/><path d="M20 20l7 7"/></svg>Auftrag, Kunde oder Adresse suchen …</div>
-      <div class="app-icons"><span class="glocke">${ic('i-mail')}<b>1</b></span>${ic('i-tel')}<span class="app-avatar">J</span></div></div>
-    <div class="app-nav">${['Übersicht', 'Aufträge', 'Objekte', 'Termine', 'Nachrichten'].map((n) => `<span class="${n === s.nav ? 'an' : ''}">${n}</span>`).join('')}</div>
-    <div class="app-pfad"><div class="titel"><small>${s.unter}</small><b>${s.titel}</b></div><div class="pfad">${s.pfad.map((p) => `<i>${p}</i>`).join('')}</div></div>
-    <div class="app-body">
-      <aside class="karte"><div class="kk-kopf"><i>${s.kunde.kurz}</i><div><b>${s.kunde.name}</b><small>${s.kunde.ort}</small></div></div>
-        <dl>${s.kunde.felder.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
-        <div class="messer">${s.messer.map(([a, b, w]) => `<div><span>${a}</span><b>${b}</b><s data-w="${w}"></s></div>`).join('')}</div></aside>
-      <main class="flaeche"><div class="reiter2">${s.reiter.map((r, i) => `<span class="${i ? '' : 'an'}">${r}</span>`).join('')}</div>
-        <div class="ansicht">${s.ansichten.map((v, i) => `<div class="${i ? '' : 'an'}">${v}</div>`).join('')}</div></main>
-      <aside class="wa"><div class="wa-kopf"><i>${zeichen(26)}</i><div><b>Julius · Tanneberger</b><small>online</small></div></div>
-        <div class="wa-verlauf" data-verlauf></div><div class="wa-eingabe"><span data-eingabe></span><b><svg viewBox="0 0 32 32" fill="currentColor"><path d="M5 27l23-11L5 5l3 9 12 2-12 2z"/></svg></b></div></aside>
-    </div></div>
-    <div class="d2-intro" data-intro><div><div class="marke2"><i>${ic(s.icon)}</i>${s.name}</div><h3>${s.intro}</h3><button type="button" data-start>Ablauf ansehen</button></div></div>
-    <svg class="zeiger" data-zeiger viewBox="0 0 24 24"><path d="M3 2l7.5 19 2.4-7.6L21 11z" fill="#fff" stroke="#152C22" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+  const appHTML = (b) => {
+    const d = DEMO[b];
+    return `<div class="e-app">
+      <div class="e-oben"><div class="app-logo">${zeichenDunkel(28)}TANNEBERGER</div><div class="e-wo"><small>Ihr Auftrag</small><b>${d.name}</b></div>
+        <div class="e-schritt"><span data-schrittzahl>Schritt 1 von ${d.schritte.length}</span><s><i data-schrittbalken></i></s></div></div>
+      <div class="e-koerper">
+        <aside class="e-ablauf"><p>Ablauf</p><ol data-schritte>${d.schritte.map((x, k) => `<li><button type="button" data-k="${k}"><b>${k + 1}</b><span>${x.titel}</span></button></li>`).join('')}</ol></aside>
+        <main class="e-mitte" data-mitte><div class="e-leer">${ic(d.icon)}<b>So läuft Ihr Auftrag</b><span>Schritt links antippen – oder einfach zuschauen.</span></div></main>
+        <aside class="e-julius"><div class="wer">${zeichen(48)}<div><b>Julius</b><small>Ihr Ansprechpartner</small></div></div>
+          <p class="hinweis">Kein Callcenter, keine KI – Sie sprechen direkt mit Julius.</p>
+          <div class="tipp"><b>Gut zu wissen</b>${d.tipp}</div>
+          <div class="unten"><a class="knopf2 gold e-gross" ${f.telefon ? `href="tel:${f.telefon}"` : 'href="#kontakt"'}>${ic('i-tel')} Anrufen</a>
+          <a class="knopf2 e-gross e-hell" ${f.whatsapp ? `href="https://wa.me/${f.whatsapp}" target="_blank" rel="noopener"` : 'href="#kontakt"'}>${ic('i-wa')} WhatsApp</a></div></aside>
+      </div></div>
+      <div class="d2-intro" data-intro><div><div class="marke2"><i>${ic(d.icon)}</i>${d.name}</div><h3>${d.intro}</h3><button type="button" data-start>Ablauf ansehen</button></div></div>
+      <svg class="zeiger" data-zeiger viewBox="0 0 24 24"><path d="M3 2l7.5 19 2.4-7.6L21 11z" fill="#fff" stroke="#152C22" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+  };
 
   // ---------- Ablauf-Steuerung ----------
-  let nr = 0, lauf = 0, pause = leise;
-  // Sichtbarkeit direkt prüfen (Scroll-Ereignisse kommen in Safari nicht immer zuverlässig)
-  const sichtbar = () => { const r = wurzel.getBoundingClientRect(), h = innerHeight; return r.top < h * .8 && r.bottom > h * .2; };
+  let nr = 0, k = -1, lauf = 0, pause = leise;
+  const sichtbar = () => { const r = wurzel.getBoundingClientRect(), h = innerHeight; return r.top < h * .85 && r.bottom > h * .15; };
   const ABBRUCH = Symbol('abbruch');
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const werkzeug = (meinLauf) => {
-    const $ = (s) => skala.querySelector(s), $$ = (s) => [...skala.querySelectorAll(s)];
-    const pruef = () => { if (meinLauf !== lauf) throw ABBRUCH; };
-    const warte = async (ms) => {
-      let rest = ms;
-      while (rest > 0) { pruef(); if (pause || !sichtbar()) { await sleep(200); continue; } await sleep(Math.min(100, rest)); rest -= 100; }
-      pruef();
-    };
-    const zeiger = () => $('[data-zeiger]');
-    const zeige = async (el) => {
-      if (typeof el === 'string') el = $(el);
-      const r = el.getBoundingClientRect(), s = skala.getBoundingClientRect();
-      const x = (r.left - s.left + r.width * .6) / faktor, y = (r.top - s.top + r.height * .55) / faktor;
-      zeiger().style.transform = `translate(${x}px,${y}px)`; await warte(950);
-    };
-    const klick = async (sel, tat) => {
-      const el = typeof sel === 'string' ? $(sel) : sel;
-      await zeige(el); const z = zeiger(); z.classList.remove('klick'); void z.offsetWidth; z.classList.add('klick');
-      el.classList.add('gedrueckt'); await warte(180); el.classList.remove('gedrueckt'); if (tat) tat(el); await warte(350);
-    };
-    const verlauf = () => $('[data-verlauf]');
-    const nachricht = async (von, text, uhr, fotos) => {
-      const t = verlauf().querySelector('.tippt'); if (t) t.remove();
-      verlauf().insertAdjacentHTML('beforeend', `<div class="bl ${von}">${fotos ? `<div class="fotos2">${fotos.map((x) => `<div>${SZ[x]}</div>`).join('')}</div>` : ''}${text}<small class="${von === 'k' ? 'blau' : ''}">${uhr}</small></div>`);
-      const v = verlauf(); while (v.children.length > 5) v.firstElementChild.remove();
-      await warte(1100);
-    };
-    const tippt = async (ms) => { verlauf().insertAdjacentHTML('beforeend', '<div class="tippt"><i></i><i></i><i></i></div>'); await warte(ms); };
-    const schreibe = async (text) => {
-      const e = $('[data-eingabe]'); await zeige(e);
-      for (const ch of text) { e.textContent += ch; await warte(35); }
-      await warte(250); e.textContent = ''; await nachricht('k', text, 'jetzt');
-    };
-    const pfad = async (n) => { $$('.pfad i').forEach((p, i) => { p.className = i < n ? 'ok' : i === n ? 'jetzt' : ''; }); fortschritt(); await warte(300); };
-    const reiter = async (n) => {
-      const r = $$('.reiter2 span')[n]; await klick(r);
-      $$('.reiter2 span').forEach((x, i) => x.classList.toggle('an', i === n));
-      $$('.ansicht>div').forEach((x, i) => x.classList.toggle('an', i === n)); await warte(500);
-    };
-    const abhaken = async (sel) => { for (const li of $$(sel)) { await zeige(li.querySelector('i')); li.classList.add('ok'); await warte(150); } await warte(400); };
-    const ersetzeFotos = async (szenen, texte, ecke) => {
-      const box = $('[data-fotos]');
-      box.innerHTML = szenen.map((s, i) => foto(s, texte[i], ecke)).join('');
-      box.querySelectorAll('.foto').forEach((x, i) => { x.classList.add('neu'); x.style.animationDelay = `${i * 150}ms`; });
-      $('[data-fotozahl]').textContent = '3 Fotos · nach der Räumung'; await warte(1400);
-    };
-    return { $, $$, warte, zeige, klick, nachricht, tippt, schreibe, pfad, reiter, abhaken, ersetzeFotos };
+  const $ = (s) => skala.querySelector(s), $$ = (s) => [...skala.querySelectorAll(s)];
+
+  const warteMit = (meinLauf, frei) => async (ms) => {
+    let rest = ms;
+    while (rest > 0) {
+      if (meinLauf !== lauf) throw ABBRUCH;
+      if (!frei && (pause || !sichtbar())) { await sleep(200); continue; }
+      await sleep(Math.min(100, rest)); rest -= 100;
+    }
+    if (meinLauf !== lauf) throw ABBRUCH;
+  };
+  const zeigerZu = async (el, warte) => {
+    const z = $('[data-zeiger]'); if (!z || !el) return;
+    const r = el.getBoundingClientRect(), s = skala.getBoundingClientRect();
+    z.style.transform = `translate(${(r.left - s.left + r.width * .5) / faktor}px,${(r.top - s.top + r.height * .55) / faktor}px)`;
+    await warte(900); z.classList.remove('klick'); void z.offsetWidth; z.classList.add('klick'); await warte(250);
   };
 
-  const fortschritt = () => {
-    const ok = skala.querySelectorAll('.pfad i.ok').length, ges = skala.querySelectorAll('.pfad i').length || 1;
-    const k = reiterKn[nr]; if (k) k.style.setProperty('--lauf', (ok / (ges - 1 || 1)).toFixed(2));
-    k && (k.querySelector('.lauf').style.transition = 'transform .6s');
+  // Schritt anzeigen + seine kleine Animation abspielen
+  const spieleSchritt = async (warte, b, i) => {
+    const d = DEMO[b], x = d.schritte[i];
+    $$('[data-schritte] button').forEach((btn, j) => { btn.classList.toggle('aktiv', j === i); btn.classList.toggle('ok', j < i); btn.querySelector('b').textContent = j < i ? '✓' : j + 1; });
+    $('[data-schrittzahl]').textContent = `Schritt ${i + 1} von ${d.schritte.length}`;
+    $('[data-schrittbalken]').style.width = `${((i + 1) / d.schritte.length) * 100}%`;
+    reiterKn[b]?.style.setProperty('--lauf', ((i + 1) / d.schritte.length).toFixed(2));
+    const mitte = $('[data-mitte]');
+    mitte.innerHTML = `<div class="e-bild">${BS[x.typ](x, b)}</div>`;
+    if (x.typ === 'chat') {
+      const v = $('[data-verlauf]');
+      for (const n of x.nachrichten) {
+        if (n.von === 'julius') { v.insertAdjacentHTML('beforeend', '<div class="tippt"><i></i><i></i><i></i></div>'); await warte(900); v.querySelector('.tippt')?.remove(); }
+        const fotos = n.fotos ? `<div class="fotos2">${Array.from({ length: Math.min(4, n.fotos + (n.fotos % 2)) }, (_, j) => `<div>${SZ[BILDER[b].vorher[j % BILDER[b].vorher.length]]}</div>`).join('')}</div>` : '';
+        v.insertAdjacentHTML('beforeend', `<div class="bl ${n.von === 'julius' ? 'j' : 'k'}">${fotos}${n.text}<small class="${n.von === 'julius' ? '' : 'blau'}">${['08:12', '08:15', '08:16'][x.nachrichten.indexOf(n)] || '08:20'}</small></div>`);
+        await warte(1200);
+      }
+      await warte(800);
+    } else if (x.typ === 'angebot') {
+      await warte(1300);
+      const kn = $('[data-annehmen]'); await zeigerZu(kn, warte);
+      kn.textContent = 'Angenommen ✓'; kn.className = 'knopf2 ok2';
+      const st = $('[data-ang-status]'); st.className = 'etikett gruen'; st.textContent = 'Angenommen'; $('[data-stempel]').classList.add('an');
+      await warte(1800);
+    } else if (x.typ === 'liste') {
+      for (const li of $$('[data-check] li')) { await warte(520); li.classList.add('ok'); }
+      await warte(1000);
+    } else if (x.typ === 'termin') {
+      await warte(1500); $('[data-bestaetigt]')?.classList.add('an'); await warte(1700);
+    } else await warte(3400);
   };
 
-  const starte = async (i, mitIntro = true) => {
-    nr = (i + SZENEN.length) % SZENEN.length; const meinLauf = ++lauf;
-    const s = SZENEN[nr];
-    reiterKn.forEach((k, j) => { k.setAttribute('aria-selected', j === nr); k.style.setProperty('--lauf', 0); });
+  const starte = async (b, ab = -1, ohneIntro = false) => {
+    nr = (b + DEMO.length) % DEMO.length; const meinLauf = ++lauf; const warte = warteMit(meinLauf, false);
+    reiterKn.forEach((kn, j) => { kn.setAttribute('aria-selected', j === nr); kn.style.setProperty('--lauf', 0); });
     const aktiv = reiterKn[nr]; aktiv.parentElement.scrollLeft = aktiv.offsetLeft - 10;
-    skala.innerHTML = appHTML(s);
-    wurzel.querySelector('[data-info]').innerHTML = `<b>${s.name}</b>${s.info}`;
-    const zg = skala.querySelector('[data-zeiger]'); zg.style.transition = 'none'; zg.style.transform = `translate(${B * .55}px,${H * .8}px)`; void zg.offsetWidth; zg.style.transition = '';
-    skala.querySelectorAll('.messer s').forEach((x) => x.style.setProperty('--w', '0%'));
-    const a = werkzeug(meinLauf);
+    skala.innerHTML = appHTML(nr);
+    const z = $('[data-zeiger]'); z.style.transition = 'none'; z.style.transform = `translate(${B * .5}px,${H * .85}px)`; void z.offsetWidth; z.style.transition = '';
     try {
-      if (mitIntro) await a.warte(2400);
-      skala.querySelector('[data-intro]').classList.add('weg');
-      skala.querySelectorAll('.messer s').forEach((x) => x.style.setProperty('--w', `${x.dataset.w}%`));
-      await a.warte(500);
-      await s.ablauf(a);
+      if (ab >= 0) { $('[data-intro]').classList.add('weg'); await spieleSchritt(warteMit(meinLauf, true), nr, ab); return; }
+      if (!ohneIntro) await warte(2400);
+      $('[data-intro]').classList.add('weg'); await warte(400);
+      for (let i = 0; i < DEMO[nr].schritte.length; i++) {
+        const btn = $$('[data-schritte] button')[i];
+        if (schmal) btn.parentElement.parentElement.scrollLeft = btn.parentElement.offsetLeft - 12;
+        await zeigerZu(btn, warte);
+        await spieleSchritt(warte, nr, i);
+      }
+      await warte(1200);
       starte(nr + 1);
     } catch (e) { if (e !== ABBRUCH) throw e; }
   };
 
   // Bedienung
-  wurzel.querySelector('.d2-reiter').addEventListener('click', (e) => { const k = e.target.closest('button'); if (k) starte(+k.dataset.i); });
+  wurzel.querySelector('.d2-reiter').addEventListener('click', (e) => { const kn = e.target.closest('button'); if (kn) starte(+kn.dataset.i); });
   wurzel.querySelector('[data-vor]').addEventListener('click', () => starte(nr + 1));
   wurzel.querySelector('[data-zur]').addEventListener('click', () => starte(nr - 1));
-  skala.addEventListener('click', (e) => { if (e.target.closest('[data-start]')) starte(nr, false); });
+  skala.addEventListener('click', (e) => {
+    if (e.target.closest('[data-start]')) { starte(nr, -1, true); return; }
+    const btn = e.target.closest('[data-schritte] button');
+    if (btn) { setzePause(true); starte(nr, +btn.dataset.k); }
+  });
   const setzePause = (p) => {
     pause = p; wurzel.querySelector('[data-sp]').style.display = p ? 'none' : ''; wurzel.querySelector('[data-sy]').style.display = p ? '' : 'none';
     wurzel.querySelector('[data-pause]').setAttribute('aria-label', p ? 'Abspielen' : 'Anhalten');
   };
-  wurzel.querySelector('[data-pause]').addEventListener('click', () => setzePause(!pause));
-  wurzel.querySelector('[data-details]').addEventListener('click', () => wurzel.querySelector('[data-info]').classList.toggle('an'));
+  wurzel.querySelector('[data-pause]').addEventListener('click', () => {
+    const war = pause; setzePause(!pause);
+    if (war) { const aktivK = $$('[data-schritte] button').findIndex((x) => x.classList.contains('aktiv')); if (aktivK >= 0) starte(nr, -1, true); }
+  });
 
-  // Läuft nur sichtbar; Rahmen wächst und hebt sich beim Hereinscrollen
+  // Rahmen wächst und hebt sich beim Hereinscrollen
   const scroll = () => {
     const r = wurzel.getBoundingClientRect(), h = innerHeight;
     const t = Math.min(1, Math.max(0, (h - r.top) / (h * .75)));
@@ -296,6 +205,6 @@
     wurzel.style.setProperty('--d2-y', ((1 - t) * 60).toFixed(1));
   };
   addEventListener('scroll', scroll, { passive: true });
-  addEventListener('resize', () => { passe(); scroll(); });
-  passe(); setzePause(pause); scroll(); starte(0);
+  let altB = 0; addEventListener('resize', () => { const w = buehne.clientWidth; if (Math.abs(w - altB) > 2) { altB = w; passe(); } scroll(); });
+  passe(); altB = buehne.clientWidth; setzePause(pause); scroll(); starte(0);
 })();

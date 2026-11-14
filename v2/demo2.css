@@ -239,3 +239,94 @@
   .d2-stern{display:none}
 }
 @media (prefers-reduced-motion:reduce){.zeiger{display:none}}
+
+/* ===== Inhalt wie Demo 1 (Ablauf · Bildschirm · Julius) ===== */
+.e-app{position:absolute;inset:0;display:grid;grid-template-rows:56px 1fr;font:13px/1.45 "Inter",system-ui,sans-serif;color:#18241D;background:#F5F3EC}
+.e-oben{display:flex;align-items:center;gap:18px;padding:0 18px;background:#fff;border-bottom:1px solid #E7E1D3}
+.e-wo{flex:1;display:flex;flex-direction:column;line-height:1.2}
+.e-wo small{color:#8A928C;font-size:11.5px}.e-wo b{font:700 15px "Montserrat";color:#152C22}
+.e-schritt{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:170px;font-size:12px;color:#55615A;font-weight:600}
+.e-schritt s{display:block;width:170px;height:5px;border-radius:3px;background:#ECE8DD;overflow:hidden;text-decoration:none}
+.e-schritt s i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2F5A44,#B98A3E);border-radius:3px;transition:width .6s}
+.e-koerper{display:grid;grid-template-columns:230px minmax(0,1fr) 280px;min-height:0}
+.e-ablauf{background:#152C22;padding:18px 12px;min-width:0}
+.e-ablauf p{margin:0 0 12px 8px;font:700 12px "Montserrat";color:var(--gold-hell)}
+.e-ablauf ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.e-ablauf button{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:11px;border:0;background:transparent;color:rgba(233,230,220,.72);font:500 13.5px "Inter";text-align:left;cursor:pointer;transition:background .25s,color .25s}
+.e-ablauf button:hover{background:rgba(255,255,255,.06);color:#fff}
+.e-ablauf button b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid rgba(233,230,220,.35);font:700 11px "Montserrat";transition:.3s}
+.e-ablauf button.ok b{background:var(--gold-hell);border-color:var(--gold-hell);color:#152C22}
+.e-ablauf button.aktiv{background:rgba(255,255,255,.1);color:#fff;box-shadow:inset 3px 0 0 var(--gold-hell)}
+.e-ablauf button.aktiv b{border-color:var(--gold-hell);color:var(--gold-hell)}
+.e-mitte{position:relative;min-width:0;min-height:0;padding:18px 22px;overflow:hidden}
+.e-bild{animation:d2rein .45s both;height:100%;display:flex;flex-direction:column;gap:12px}
+.e-kopf{display:flex;justify-content:space-between;align-items:baseline}
+.e-kopf h4{margin:0;font:700 18px "Montserrat";color:#152C22}
+.e-kopf span{font-size:12px;color:#8A928C;font-weight:600}
+.e-wa{flex:1;min-height:0;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid #E7E1D3;max-width:560px}
+.e-wa .wa-verlauf{justify-content:flex-start}
+.e-termin{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.e-wt,.e-tage{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 12px;text-align:center}
+.e-wt{padding-top:10px}.e-wt b{font-size:11px;color:#8A928C}
+.e-tage{padding-bottom:12px}
+.e-tage span{height:30px;display:grid;place-items:center;border-radius:8px;font-weight:500}
+.e-tage span.leer{visibility:hidden}
+.e-tage span.an{background:#152C22;color:var(--gold-hell);font-weight:700;animation:d2puls 1.6s ease-in-out 2}
+@keyframes d2puls{50%{box-shadow:0 0 0 6px rgba(217,181,106,.35)}}
+.e-tdetail{padding:16px;display:flex;flex-direction:column;gap:12px}
+.e-uhr small{display:block;color:#8A928C;font-weight:600}.e-uhr b{font:700 30px "Montserrat";color:#152C22}
+.e-tdetail ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.e-tdetail li{display:flex;gap:9px;align-items:center;animation:d2rein .4s both;animation-delay:var(--v)}
+.e-tdetail li i{width:20px;height:20px;border-radius:50%;background:#E3EFE6;color:#2F5A44;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:800}
+.e-best{align-self:flex-start;opacity:0;transform:scale(.8);transition:.4s cubic-bezier(.2,1.6,.4,1)}.e-best.an{opacity:1;transform:none}
+.e-ang{max-width:640px}
+.e-ang .a-zeile{animation:d2rein .4s both;animation-delay:var(--v)}
+.e-plan{padding:6px 14px;max-width:640px}
+.e-plan div{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid #F1EDE3;animation:d2rein .4s both;animation-delay:var(--v)}
+.e-plan div:last-child{border:0}
+.e-plan b{justify-self:start;padding:3px 10px;border-radius:999px;background:#152C22;color:var(--gold-hell);font:700 11.5px "Montserrat"}
+.e-fertig{display:grid;gap:14px}
+.e-fotos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.e-abschluss{display:flex;align-items:center;gap:22px;padding:6px 4px}
+.e-abschluss p{margin:0;font-size:15px;color:#33413A;max-width:30rem}
+.e-st{position:relative;right:auto;top:auto;flex:none;width:104px;height:104px;font-size:11px}
+.e-julius{border-left:1px solid #E7E1D3;background:#fff;padding:18px 16px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.e-julius .wer{display:flex;align-items:center;gap:10px}
+.e-julius .wer svg{width:48px;height:48px;border-radius:50%;background:#152C22;padding:4px}
+.e-julius .wer b{display:block;font:700 15px "Montserrat"}.e-julius .wer small{color:#8A928C;font-size:12px}
+.e-julius .hinweis{margin:0;font-size:13px;color:#55615A}
+.e-julius .tipp{background:#F5F3EC;border:1px solid #E7E1D3;border-radius:12px;padding:12px;font-size:13px}
+.e-julius .tipp b{display:block;font:700 12px "Montserrat";color:#8A6420;margin-bottom:4px}
+.e-julius .unten{margin-top:auto;display:grid;gap:8px}
+.e-gross{height:42px;justify-content:center;font-size:13.5px;text-decoration:none}
+.e-gross svg{width:16px;height:16px}
+.e-hell{background:#F5F3EC;color:#152C22;border:1px solid #E7E1D3}
+
+/* Handy: Ablauf als Leiste oben, Julius ausgeblendet (Telefon/WhatsApp gibt es in der Fußleiste) */
+.d2-skala.schmal .e-app{grid-template-rows:56px 1fr;font-size:14px}
+.d2-skala.schmal .e-oben .app-logo{display:none}
+.d2-skala.schmal .e-schritt{min-width:0}.d2-skala.schmal .e-schritt s{width:110px}
+.d2-skala.schmal .e-koerper{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+.d2-skala.schmal .e-julius{display:none}
+.d2-skala.schmal .e-ablauf{padding:8px}
+.d2-skala.schmal .e-ablauf p{display:none}
+.d2-skala.schmal .e-ablauf ol{display:flex;overflow-x:auto;scrollbar-width:none;gap:4px}
+.d2-skala.schmal .e-ablauf ol::-webkit-scrollbar{display:none}
+.d2-skala.schmal .e-ablauf button{white-space:nowrap;padding:8px 10px;font-size:13px}
+.d2-skala.schmal .e-ablauf button.aktiv{box-shadow:inset 0 -3px 0 var(--gold-hell)}
+.d2-skala.schmal .e-mitte{padding:12px 14px}
+.d2-skala.schmal .e-termin{grid-template-columns:1fr}
+.d2-skala.schmal .e-kal{display:none}
+.d2-skala.schmal .e-abschluss{flex-direction:column;align-items:flex-start;gap:10px}
+.d2-skala.schmal .e-plan div{grid-template-columns:90px 1fr}
+@media (max-width:720px){
+  .d2-leiste{flex-wrap:nowrap;gap:.4rem;padding-bottom:8px}
+  .d2-reiter{flex-basis:auto}
+  .d2-reiter button{height:36px;padding:0 .8rem 0 .35rem;font-size:.8rem;gap:.4rem}
+  .d2-reiter .rk{width:26px;height:26px}.d2-reiter .rk svg{width:14px;height:14px}
+  .d2-rund{width:34px;height:34px}.d2-rund svg{width:15px;height:15px}
+  .d2-steuer [data-zur],.d2-steuer [data-vor]{display:none}
+  .d2-titel{font-size:1.45rem;margin-bottom:1.4rem}
+}
+.e-leer{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:#8A928C}
+.e-leer svg{width:44px;height:44px;color:#B98A3E;margin-bottom:6px}.e-leer b{font:700 17px "Montserrat";color:#152C22}
